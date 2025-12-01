@@ -1,0 +1,610 @@
+[
+  {
+    "browser": "chrome",
+    "windowId": "720050716",
+    "tabs": [
+      {
+        "title": "LangChain: How an Agent works. Deep dive into Agent and AgentExecutor | by Masato Naka | Medium",
+        "url": "https://nakamasato.medium.com/langchain-how-an-agent-works-7dce1569933d"
+      },
+      {
+        "title": "📊 Data Augmentation for Enhanced Language Model Training",
+        "url": "https://www.rohan-paul.com/p/data-augmentation-for-enhanced-language"
+      },
+      {
+        "title": "📡 Model Context Protocol (MCP) 101 - Rohan's Bytes",
+        "url": "https://www.rohan-paul.com/p/model-context-protocol-mcp-101"
+      },
+      {
+        "title": "Eureka forbes",
+        "url": "https://www.eurekaforbes.com/login?redirectTo=%2FstatusTracking%3FreqId%3DCM-030925-58193485%26assetid%3Ddf54ea92-62e0-ec11-bb3c-6045bd7266b8"
+      },
+      {
+        "title": "Agentic Design Patterns",
+        "url": "https://docs.google.com/document/d/1rsaK53T3Lg5KoGwvf8ukOUvbELRtH-V0LnOIFDxBryE/mobilebasic"
+      },
+      {
+        "title": "Inside vLLM: Anatomy of a High-Throughput LLM Inference System - Aleksa Gordić",
+        "url": "https://www.aleksagordic.com/blog/vllm"
+      },
+      {
+        "title": "vllm-project/vllm: A high-throughput and memory-efficient inference and serving engine for LLMs",
+        "url": "https://github.com/vllm-project/vllm"
+      },
+      {
+        "title": "microsoft/rStar",
+        "url": "https://github.com/microsoft/rStar"
+      },
+      {
+        "title": "Accenture/mcp-bench: MCP-Bench: Benchmarking Tool-Using LLM Agents with Complex Real-World Tasks via MCP Servers",
+        "url": "https://github.com/Accenture/mcp-bench"
+      },
+      {
+        "title": "Two in-house models in support of our mission   | Microsoft AI",
+        "url": "https://microsoft.ai/news/two-new-in-house-models/"
+      },
+      {
+        "title": "Deep Think with Confidence",
+        "url": "https://jiaweizzhao.github.io/deepconf/"
+      },
+      {
+        "title": "Beyond Brute Force: How Meta AI’s DeepConf Achieves SOTA Reasoning with 85% Less Compute | by ArXiv In-depth Analysis | Towards Explainable AI | Aug, 2025 | Medium",
+        "url": "https://medium.com/towards-explainable-ai/beyond-brute-force-how-meta-ais-deepconf-achieves-sota-reasoning-with-85-less-compute-6e3c5fc126b3"
+      },
+      {
+        "title": "Grok Code Fast 1 | xAI",
+        "url": "https://x.ai/news/grok-code-fast-1"
+      },
+      {
+        "title": "Lenovo’s Customer Service AI Chatbot Got Tricked Into Revealing Sensitive Information. Here's How. - CX Today",
+        "url": "https://www.cxtoday.com/contact-center/lenovos-customer-service-ai-chatbot-got-tricked-into-revealing-sensitive-information-heres-how/"
+      },
+      {
+        "title": "Cisco's AI Canvas goes beyond where SaaS and AIOps fall short - Techzine Global",
+        "url": "https://www.techzine.eu/blogs/applications/134359/ciscos-ai-canvas-goes-beyond-where-saas-and-aiops-fall-short/"
+      },
+      {
+        "title": "Service Mesh Explained | Sidecar Proxy & Microservices Communication - YouTube",
+        "url": "https://www.youtube.com/watch?v=xuOJF3w4vQQ"
+      },
+      {
+        "title": "How Databases Store Passwords Securely - YouTube",
+        "url": "https://www.youtube.com/watch?v=TuNvdQUVkto"
+      },
+      {
+        "title": "DB Indexing in System Design Interviews - B-tree, Geospatial, Inverted Index, and more! - YouTube",
+        "url": "https://www.youtube.com/watch?v=BHCSL_ZifI0"
+      },
+      {
+        "title": "JUJUTSU KAISEN: Execution | Official Trailer - In Theatres December 5 - YouTube",
+        "url": "https://www.youtube.com/watch?v=Vo7G5Y212Gg"
+      },
+      {
+        "title": "Dynamic Programming | Introduction - YouTube",
+        "url": "https://www.youtube.com/watch?v=nqowUJzG-iM&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go"
+      },
+      {
+        "title": "Mastering Dynamic Programming - How to solve any interview problem (Part 1) - YouTube",
+        "url": "https://www.youtube.com/watch?v=Hdr64lKQ3e4"
+      },
+      {
+        "title": "20 Patterns to Master Dynamic Programming",
+        "url": "https://blog.algomaster.io/p/20-patterns-to-master-dynamic-programming"
+      },
+      {
+        "title": "LeetCode was HARD until I Learned these 15 Patterns",
+        "url": "https://blog.algomaster.io/p/15-leetcode-patterns"
+      },
+      {
+        "title": "codingMohan - YouTube",
+        "url": "https://www.youtube.com/@codingmohan/videos"
+      },
+      {
+        "title": "Ways to Express an Integer as Sum of Powers | Recursion Memo | Leetcode 2787 | codestorywithMIK - YouTube",
+        "url": "https://www.youtube.com/watch?v=yA0DVkXhueg"
+      },
+      {
+        "title": "Introduction to Big-O - YouTube",
+        "url": "https://www.youtube.com/watch?v=zUUkiEllHG0"
+      },
+      {
+        "title": "PSA Hash Collisions in competitive programming · aryanc403",
+        "url": "https://aryanc403.com/blog/psa-hash-collisions/"
+      },
+      {
+        "title": "How to play cat and mouse game ft leetcode contests · aryanc403",
+        "url": "https://aryanc403.com/blog/how-to-play-cat-and-mouse-game/"
+      },
+      {
+        "title": "Editorial - SuntoryProgrammingContest2024（AtCoder Beginner Contest 357）",
+        "url": "https://atcoder.jp/contests/abc357/editorial/10192"
+      },
+      {
+        "title": "E - Takahashi's Anguish",
+        "url": "https://atcoder.jp/contests/abc256/tasks/abc256_e"
+      },
+      {
+        "title": "F - Construct a Palindrome",
+        "url": "https://atcoder.jp/contests/abc197/tasks/abc197_f"
+      },
+      {
+        "title": "2422. Merge Operations to Turn Array Into a Palindrome 🔒 - In-Depth Explanation",
+        "url": "https://algo.monster/liteproblems/2422"
+      },
+      {
+        "title": "Problem - 1610B - Codeforces",
+        "url": "https://codeforces.com/problemset/problem/1610/B"
+      },
+      {
+        "title": "C - Palindromic Matrix",
+        "url": "https://atcoder.jp/contests/code-festival-2017-quala/tasks/code_festival_2017_quala_c"
+      },
+      {
+        "title": "Word Search - LeetCode",
+        "url": "https://leetcode.com/problems/word-search/description/?envType=problem-list-v2&envId=depth-first-search"
+      },
+      {
+        "title": "Check if DFS Strings Are Palindromes - LeetCode",
+        "url": "https://leetcode.com/problems/check-if-dfs-strings-are-palindromes/description/?envType=problem-list-v2&envId=depth-first-search"
+      },
+      {
+        "title": "Ways to Express an Integer as Sum of Powers - LeetCode",
+        "url": "https://leetcode.com/problems/ways-to-express-an-integer-as-sum-of-powers/description/"
+      },
+      {
+        "title": "Atcoder Notes",
+        "url": "https://george24601.github.io/2017/12/19/atcoder.html"
+      },
+      {
+        "title": "C - Count Arithmetic Subarrays",
+        "url": "https://atcoder.jp/contests/abc369/tasks/abc369_c"
+      },
+      {
+        "title": "B - Sum AND Subarrays",
+        "url": "https://atcoder.jp/contests/dwacon5th-prelims/tasks/dwacon5th_prelims_b"
+      },
+      {
+        "title": "C - Index × A(Continuous ver.)",
+        "url": "https://atcoder.jp/contests/abc267/tasks/abc267_c"
+      },
+      {
+        "title": "Senior Software Engineer - Web | Uber | LinkedIn",
+        "url": "https://www.linkedin.com/jobs/view/4300884512/?trackingId=IH383PVQRVIrueoOsYuZqA%3D%3D&refId=dRQN4dTV2Mb1BMSHNKSWBA%3D%3D&midToken=AQEDDkc1HbzUbg&midSig=2ebdkkYTPM5HY1&trk=eml-email_job_alert_digest_01-primary_job_list-0-jobcard_body_15088600172&trkEmail=eml-email_job_alert_digest_01-primary_job_list-0-jobcard_body_15088600172-null-bsd29t~mfmkerno~1l-null-null&eid=bsd29t-mfmkerno-1l&otpToken=MTUwNDFjZTcxNDI4Y2ZjMWIzMjQwNGVkNDMxNmU3YjY4OGM2ZDk0NTlmYTY4ZDYxNzdjMjAwNjY0ZTVhNWVmMmYwZDRkZjhhMWJlNmYzZmM3M2ZmZDgyZjU0MDE3NzVlN2ZiM2Y2YWIzNzA0MGUxOTA1OThiOCwxLDE%3D"
+      },
+      {
+        "title": "Search all Jobs | LinkedIn",
+        "url": "https://www.linkedin.com/jobs/search/?currentJobId=4261615845&f_C=96151950&geoId=92000000&origin=COMPANY_PAGE_JOBS_CLUSTER_EXPANSION"
+      },
+      {
+        "title": "Udit Agarwal | LinkedIn",
+        "url": "https://www.linkedin.com/in/anomaly2104/"
+      },
+      {
+        "title": "[Need help] Shortest path, but edge has 2 cost Ai and Bi, and cost of path is prod of sum Ai and Bi - Codeforces",
+        "url": "https://codeforces.com/blog/entry/107811"
+      },
+      {
+        "title": "Number of Provinces - (Google, Microsoft,Amazon) | BFS | Graph Concepts & Qns - 11 |Explanation-Code - YouTube",
+        "url": "https://www.youtube.com/watch?v=YDMkSvNdB20"
+      },
+      {
+        "title": "Split Array with Equal Sum - LeetCode",
+        "url": "https://leetcode.com/problems/split-array-with-equal-sum/description/"
+      },
+      {
+        "title": "Kth Largest Element in an Array - LeetCode",
+        "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/description/"
+      },
+      {
+        "title": "Double a Number Represented as a Linked List - LeetCode",
+        "url": "https://leetcode.com/problems/double-a-number-represented-as-a-linked-list/description/"
+      },
+      {
+        "title": "3Sum - LeetCode",
+        "url": "https://leetcode.com/problems/3sum/editorial/"
+      },
+      {
+        "title": "4Sum - LeetCode",
+        "url": "https://leetcode.com/problems/4sum/editorial/"
+      },
+      {
+        "title": "3Sum Smaller - LeetCode",
+        "url": "https://leetcode.com/problems/3sum-smaller/description/"
+      },
+      {
+        "title": "Delete N Nodes After M Nodes of a Linked List - LeetCode",
+        "url": "https://leetcode.com/problems/delete-n-nodes-after-m-nodes-of-a-linked-list/description/"
+      },
+      {
+        "title": "Move even nodes to the end of the linked list in reverse order | Techie Delight",
+        "url": "https://www.techiedelight.com/move-even-nodes-to-end-of-list-in-reverse-order/"
+      },
+      {
+        "title": "Reverse Linked List II - LeetCode",
+        "url": "https://leetcode.com/problems/reverse-linked-list-ii/description/"
+      },
+      {
+        "title": "Valid Sudoku - LeetCode",
+        "url": "https://leetcode.com/problems/valid-sudoku/description/?envType=daily-question&envId=2025-09-20"
+      },
+      {
+        "title": "Magic Squares In Grid - LeetCode",
+        "url": "https://leetcode.com/problems/magic-squares-in-grid/description/"
+      },
+      {
+        "title": "Minimum Operations to Make Subarray Elements Equal - LeetCode",
+        "url": "https://leetcode.com/problems/minimum-operations-to-make-subarray-elements-equal/description/"
+      },
+      {
+        "title": "Satisfiability of Equality Equations - LeetCode",
+        "url": "https://leetcode.com/problems/satisfiability-of-equality-equations/description/"
+      },
+      {
+        "title": "The Most Common Coding Interview Question SOLVED! - YouTube",
+        "url": "https://www.youtube.com/watch?v=2wDJSeX5J-E"
+      },
+      {
+        "title": "Find K Closest Elements - LeetCode",
+        "url": "https://leetcode.com/problems/find-k-closest-elements/editorial/"
+      },
+      {
+        "title": "Execution of All Suffix Instructions Staying in a Grid - LeetCode",
+        "url": "https://leetcode.com/problems/execution-of-all-suffix-instructions-staying-in-a-grid/description/"
+      },
+      {
+        "title": "Find the Minimum Possible Sum of a Beautiful Array - LeetCode",
+        "url": "https://leetcode.com/problems/find-the-minimum-possible-sum-of-a-beautiful-array/description/"
+      },
+      {
+        "title": "Find K-th Smallest Pair Distance - LeetCode",
+        "url": "https://leetcode.com/problems/find-k-th-smallest-pair-distance/description/"
+      },
+      {
+        "title": "Guess Number Higher or Lower II - LeetCode",
+        "url": "https://leetcode.com/problems/guess-number-higher-or-lower-ii/description/"
+      },
+      {
+        "title": "Guess Number Higher or Lower - LeetCode",
+        "url": "https://leetcode.com/problems/guess-number-higher-or-lower/description/"
+      },
+      {
+        "title": "Weekly Contest 468 - LeetCode",
+        "url": "https://leetcode.com/contest/weekly-contest-468/"
+      },
+      {
+        "title": "Number of Enclaves - LeetCode",
+        "url": "https://leetcode.com/problems/number-of-enclaves/description/"
+      },
+      {
+        "title": "Minimum Genetic Mutation -(Asked by Twitter) : Explanation ➕ Live Coding - YouTube",
+        "url": "https://www.youtube.com/watch?v=H3kSFSv-t30&list=PLpIkg8OmuX-I_49pdy1XFY6OcATnxUrrO"
+      },
+      {
+        "title": "The Microservice Myth: What Monzo Learned About Scaling a Bank - YouTube",
+        "url": "https://www.youtube.com/watch?v=xqauTJ478bw&t=1072s"
+      },
+      {
+        "title": "Count of Interesting Subarrays - LeetCode",
+        "url": "https://leetcode.com/problems/count-of-interesting-subarrays/description/?envType=daily-question&envId=2025-09-20"
+      },
+      {
+        "title": "Simple Bank System - LeetCode",
+        "url": "https://leetcode.com/problems/simple-bank-system/description/"
+      }
+    ]
+  },
+  {
+    "browser": "chrome",
+    "windowId": "720050789",
+    "tabs": [
+      {
+        "title": "Insufficient Nodes in Root to Leaf Paths - LeetCode",
+        "url": "https://leetcode.com/problems/insufficient-nodes-in-root-to-leaf-paths/description/"
+      },
+      {
+        "title": "Sort Features by Popularity - LeetCode",
+        "url": "https://leetcode.com/problems/sort-features-by-popularity/description/"
+      },
+      {
+        "title": "Time Taken to Mark All Nodes - LeetCode",
+        "url": "https://leetcode.com/problems/time-taken-to-mark-all-nodes/description/"
+      },
+      {
+        "title": "Minimum Cost Path with Edge Reversals - LeetCode",
+        "url": "https://leetcode.com/problems/minimum-cost-path-with-edge-reversals/description/"
+      },
+      {
+        "title": "Minimum Edge Reversals So Every Node Is Reachable - LeetCode",
+        "url": "https://leetcode.com/problems/minimum-edge-reversals-so-every-node-is-reachable/description/"
+      },
+      {
+        "title": "Maximum Binary Tree - LeetCode",
+        "url": "https://leetcode.com/problems/maximum-binary-tree/description/"
+      },
+      {
+        "title": "Sum of Beautiful Subsequences - LeetCode",
+        "url": "https://leetcode.com/problems/sum-of-beautiful-subsequences/description/"
+      },
+      {
+        "title": "Weekly Contest 463 - LeetCode",
+        "url": "https://leetcode.com/contest/weekly-contest-463/"
+      },
+      {
+        "title": "Weekly Contest 465 - LeetCode",
+        "url": "https://leetcode.com/contest/weekly-contest-465/"
+      },
+      {
+        "title": "Flatten Deeply Nested Array - LeetCode",
+        "url": "https://leetcode.com/problems/flatten-deeply-nested-array/description/"
+      },
+      {
+        "title": "Sliding Window Maximum - LeetCode",
+        "url": "https://leetcode.com/problems/sliding-window-maximum/description/"
+      },
+      {
+        "title": "Largest Combination With Bitwise AND Greater Than Zero - LeetCode",
+        "url": "https://leetcode.com/problems/largest-combination-with-bitwise-and-greater-than-zero/description/"
+      },
+      {
+        "title": "Subarray Product Less Than K - LeetCode",
+        "url": "https://leetcode.com/problems/subarray-product-less-than-k/description/"
+      },
+      {
+        "title": "Minimum Window Substring - LeetCode",
+        "url": "https://leetcode.com/problems/minimum-window-substring/description/"
+      },
+      {
+        "title": "Maximum Length of Repeated Subarray - LeetCode",
+        "url": "https://leetcode.com/problems/maximum-length-of-repeated-subarray/description/"
+      },
+      {
+        "title": "Maximum Size Subarray Sum Equals k - LeetCode",
+        "url": "https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/description/"
+      },
+      {
+        "title": "Shortest Subarray with Sum at Least K - LeetCode",
+        "url": "https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/description/"
+      },
+      {
+        "title": "Minimum Size Subarray Sum - LeetCode",
+        "url": "https://leetcode.com/problems/minimum-size-subarray-sum/"
+      },
+      {
+        "title": "Shortest Subarray with Sum at Least K - LeetCode",
+        "url": "https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/description/"
+      },
+      {
+        "title": "Set.prototype.intersection() - JavaScript | MDN",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/intersection"
+      },
+      {
+        "title": "Find K-Length Substrings With No Repeated Characters - LeetCode",
+        "url": "https://leetcode.com/problems/find-k-length-substrings-with-no-repeated-characters/description/"
+      },
+      {
+        "title": "188. Best Time to Buy and Sell Stock IV - In-Depth Explanation",
+        "url": "https://algo.monster/liteproblems/188"
+      },
+      {
+        "title": "Check if Move is Legal - LeetCode",
+        "url": "https://leetcode.com/problems/check-if-move-is-legal/description/"
+      },
+      {
+        "title": "Minimum Subarrays in a Valid Split - LeetCode",
+        "url": "https://leetcode.com/problems/minimum-subarrays-in-a-valid-split/description/"
+      },
+      {
+        "title": "How NGINX Handles MILLIONS of Requests With Just 1 Process 🔥 - YouTube",
+        "url": "https://www.youtube.com/watch?v=I6dpN0geIb4"
+      },
+      {
+        "title": "Path with Maximum Probability - LeetCode",
+        "url": "https://leetcode.com/problems/path-with-maximum-probability/description/"
+      },
+      {
+        "title": "First Missing Positive - LeetCode",
+        "url": "https://leetcode.com/problems/first-missing-positive/solutions/4925619/hard-easy-positioning-elements-at-correct-index/"
+      },
+      {
+        "title": "Longest Consecutive Sequence - LeetCode",
+        "url": "https://leetcode.com/problems/longest-consecutive-sequence/description/"
+      },
+      {
+        "title": "Previous Smaller Element. Similar To Leetcode #503 (Medium) | by Algorithms Digest | Algorithms Digest | Medium",
+        "url": "https://medium.com/algorithms-digest/previous-smaller-element-e3996fb8be3c"
+      },
+      {
+        "title": "Maximal Rectangle - LeetCode",
+        "url": "https://leetcode.com/problems/maximal-rectangle/description/"
+      },
+      {
+        "title": "Minimum Cost Homecoming of a Robot in a Grid - LeetCode",
+        "url": "https://leetcode.com/problems/minimum-cost-homecoming-of-a-robot-in-a-grid/description/"
+      },
+      {
+        "title": "Longest Common Subsequence (2 Strings) - Dynamic Programming & Competing Subproblems - YouTube",
+        "url": "https://www.youtube.com/watch?v=ASoaQq66foQ&list=PLiQ766zSC5jM2OKVr8sooOuGgZkvnOCTI&index=6"
+      },
+      {
+        "title": "🔥🔥 𝐔𝐥𝐭𝐢𝐦𝐚𝐭𝐞 𝐃𝐲𝐧𝐚𝐦𝐢𝐜 𝐏𝐫𝐨𝐠𝐫𝐚𝐦𝐦𝐢𝐧𝐠 𝐒𝐞𝐫𝐢𝐞𝐬 𝐨𝐧 𝐋𝐞𝐞𝐭𝐂𝐨𝐝𝐞 🔥🔥 - Discuss - LeetCode",
+        "url": "https://leetcode.com/discuss/post/5659029/ultimate-dynamic-programming-series-on-l-vpys/"
+      },
+      {
+        "title": "Split a Circular Linked List - LeetCode",
+        "url": "https://leetcode.com/problems/split-a-circular-linked-list/description/"
+      },
+      {
+        "title": "Find maximum sum `K × K` submatrix in a given `M × N` matrix | Techie Delight",
+        "url": "https://www.techiedelight.com/find-maximum-sum-submatrix-in-given-matrix/"
+      },
+      {
+        "title": "Find maximum sum submatrix present in a matrix | Techie Delight",
+        "url": "https://www.techiedelight.com/find-maximum-sum-submatrix-present-given-matrix/"
+      },
+      {
+        "title": "Sum of Subarray Ranges - LeetCode",
+        "url": "https://leetcode.com/problems/sum-of-subarray-ranges/description/"
+      },
+      {
+        "title": "Minimum Operations to Make All Array Elements Equal - LeetCode",
+        "url": "https://leetcode.com/problems/minimum-operations-to-make-all-array-elements-equal/description/"
+      },
+      {
+        "title": "Stone Game II - LeetCode",
+        "url": "https://leetcode.com/problems/stone-game-ii/description/"
+      },
+      {
+        "title": "Third Maximum Number - LeetCode",
+        "url": "https://leetcode.com/problems/third-maximum-number/description/"
+      },
+      {
+        "title": "Task Scheduler - LeetCode",
+        "url": "https://leetcode.com/problems/task-scheduler/description/"
+      },
+      {
+        "title": "Find Edges in Shortest Paths - LeetCode",
+        "url": "https://leetcode.com/problems/find-edges-in-shortest-paths/description/"
+      },
+      {
+        "title": "Peaks in Array - LeetCode",
+        "url": "https://leetcode.com/problems/peaks-in-array/description/"
+      },
+      {
+        "title": "Explore - LeetCode",
+        "url": "https://leetcode.com/explore/learn/card/binary-search/"
+      },
+      {
+        "title": "Analyze User Website Visit Pattern - LeetCode",
+        "url": "https://leetcode.com/problems/analyze-user-website-visit-pattern/description/"
+      },
+      {
+        "title": "Divide Array Into Increasing Sequences - LeetCode",
+        "url": "https://leetcode.com/problems/divide-array-into-increasing-sequences/description/"
+      },
+      {
+        "title": "Find Triangular Sum of an Array - LeetCode",
+        "url": "https://leetcode.com/problems/find-triangular-sum-of-an-array/description/"
+      },
+      {
+        "title": "LCP 04. 覆盖 - 力扣（LeetCode）",
+        "url": "https://leetcode.cn/problems/broken-board-dominoes/description/"
+      },
+      {
+        "title": "Domino and Tromino Tiling - LeetCode",
+        "url": "https://leetcode.com/problems/domino-and-tromino-tiling/description/"
+      },
+      {
+        "title": "Runtime to Algo Cheat Sheet",
+        "url": "https://algo.monster/problems/runtime_summary"
+      },
+      {
+        "title": "Basic Leetcode Problems - Google Docs",
+        "url": "https://docs.google.com/document/d/1QWKWmLXexK28DSnfZKR13u9IHlzdXaDIFFWs0qJMVww/edit?tab=t.0"
+      },
+      {
+        "title": "(15) What are Distributed CACHES and how do they manage DATA CONSISTENCY? - YouTube",
+        "url": "https://www.youtube.com/watch?v=U3RkDLtS7uY"
+      },
+      {
+        "title": "Lesser Known Free System Design Resources : r/SystemDesign",
+        "url": "https://www.reddit.com/r/SystemDesign/comments/1ablqod/lesser_known_free_system_design_resources/?rdt=56466"
+      },
+      {
+        "title": "(15) Database Indexes: What do they do? | Systems Design Interview: 0 to 1 with Google Software Engineer - YouTube",
+        "url": "https://www.youtube.com/watch?v=LzNdvuj3a5M&list=PLjTveVh7FakLdTmm42TMxbN8PvVn5g4KJ&index=7"
+      },
+      {
+        "title": "Choosing the right database. How to choose the right storage… | by CodeKarle | Medium",
+        "url": "https://medium.com/@codekarle/choosing-the-right-database-cbfa5934a01f"
+      },
+      {
+        "title": "JavaScript in the Background - Use Service Worker, Web Push, and other APIs to update your web app in the background | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/background-javascript/"
+      },
+      {
+        "title": "JavaScript Design Patterns for Web Apps | Vanilla JS, SPA & MPA Techniques | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/js-design-patterns/"
+      },
+      {
+        "title": "Web Performance | Build Faster Websites & Web Applications | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/web-perf-v2/"
+      },
+      {
+        "title": "JavaScript Performance Optimization Techniques | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/blazingly-fast-js/"
+      },
+      {
+        "title": "Web App Performance Essentials | Learn Optimization Techniques | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/web-app-performance/"
+      },
+      {
+        "title": "Front-End System Design: Advanced UI, Performance & Architecture Techniques to Ace Interviews | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/frontend-system-design/"
+      },
+      {
+        "title": "React Server Components and Performance | Intermediate React, v6 from Frontend Masters | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/intermediate-react-v6/"
+      },
+      {
+        "title": "Learning the Hard Parts of JS | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/javascript-hard-parts-v2/"
+      },
+      {
+        "title": "Composition Is All You Need | Fernando Rojo at React Universe Conf 2025 - YouTube",
+        "url": "https://www.youtube.com/watch?v=4KvbVq3Eg5w"
+      },
+      {
+        "title": "Frontend System Design: Music Streaming Service (Spotify) - YouTube",
+        "url": "https://www.youtube.com/watch?v=qFFgmp8gyec&list=PL4OG1laG0gW_AcchCg1_adOzDAtnxMjPN"
+      },
+      {
+        "title": "Modern React Patterns: Concurrent Rendering, Actions & What’s Next | Aurora Scharff at RUC 2025 - YouTube",
+        "url": "https://www.youtube.com/watch?v=I3AsmAWWGEs"
+      },
+      {
+        "title": "What Are Design Patterns? - YouTube",
+        "url": "https://www.youtube.com/watch?v=BWprw8UHIzA&list=PLZlA0Gpn_vH_CthENcPCM0Dww6a5XYC7f"
+      },
+      {
+        "title": "🎯 25 Most Asked Technical Interview Questions In 2025 (Frontend, Backend & Fullstack)",
+        "url": "https://cdn.prod.website-files.com/630373bd38e59e2c2827ae68/689213725971ad5f407e67fb_%F0%9F%8E%AF%2025%20Most%20Asked%20Technical%20Interview%20Questions%20In%202025%20(Frontend%2C%20Backend%20%26%20Fullstack).pdf"
+      },
+      {
+        "title": "What is Functional Programming? | Learn Functional Programming Course | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/functional-first-steps-v2/"
+      },
+      {
+        "title": "JavaScript Hard Parts by Will Sentance | Iván Ovejero",
+        "url": "https://ivov.dev/notes/javascript-hard-parts-by-will-sentance"
+      },
+      {
+        "title": "The New Hard Parts | Dennis O'Keeffe Notes",
+        "url": "https://docs.dennisokeeffe.com/javascript/the-new-hard-parts"
+      },
+      {
+        "title": "Understanding the Content Rendering Process in Browsers",
+        "url": "https://www.educative.io/courses/grokking-frontend-system-design-interview/understanding-the-content-rendering-process-in-browsers"
+      },
+      {
+        "title": "6 must-know traits of zero latency System Design",
+        "url": "https://www.educative.io/newsletter/system-design/zero-latency-systems"
+      },
+      {
+        "title": "Implement Trie (Prefix Tree) - LeetCode",
+        "url": "https://leetcode.com/problems/implement-trie-prefix-tree/description/"
+      },
+      {
+        "title": "InCodeLearning-Python3/algorithm/ood/in_memory_db.py at 1183e227ee377057c51ebed85e42e69a62c810f0 · JesseZhuang/InCodeLearning-Python3",
+        "url": "https://github.com/JesseZhuang/InCodeLearning-Python3/blob/1183e227ee377057c51ebed85e42e69a62c810f0/algorithm/ood/in_memory_db.py#L102"
+      },
+      {
+        "title": "New Tab",
+        "url": "chrome://newtab/"
+      },
+      {
+        "title": "Settings - Sync and Google services",
+        "url": "chrome://settings/syncSetup"
+      }
+    ]
+  }
+]

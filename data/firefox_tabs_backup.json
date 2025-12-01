@@ -1,0 +1,982 @@
+[
+  {
+    "browser": "firefox",
+    "windowId": null,
+    "tabs": [
+      {
+        "title": "What 2026 looks like — AI Alignment Forum",
+        "url": "https://www.alignmentforum.org/posts/6Xgy6CAf2jqHhynHL/what-2026-looks-like"
+      },
+      {
+        "title": "Draft report on AI timelines — AI Alignment Forum",
+        "url": "https://www.alignmentforum.org/posts/KrJfoZzpSDpnrv9va/draft-report-on-ai-timelines#DPqQYwx2nJhtW6xME"
+      },
+      {
+        "title": "The date of AI Takeover is not the day the AI takes over — AI Alignment Forum",
+        "url": "https://www.alignmentforum.org/s/5Eg2urmQjA4ZNcezy/p/JPan54R525D68NoEt"
+      },
+      {
+        "title": "Recommendations — AI Alignment Forum",
+        "url": "https://www.alignmentforum.org/recommendations"
+      },
+      {
+        "title": "The Waluigi Effect (mega-post) — AI Alignment Forum",
+        "url": "https://www.alignmentforum.org/posts/D7PumeYTDPfBTp3i7/the-waluigi-effect-mega-post"
+      },
+      {
+        "title": "AI 2027: What Superintelligence Looks Like — AI Alignment Forum",
+        "url": "https://www.alignmentforum.org/posts/TpSFoqoG2M5MAAesg/ai-2027-what-superintelligence-looks-like-1"
+      },
+      {
+        "title": "Universal web app server — NGINX Unit",
+        "url": "https://unit.nginx.org/"
+      },
+      {
+        "title": "Computing Jaccard Similarity with Redis - Redis",
+        "url": "https://redis.io/blog/computing-jaccard-similarity-with-redis/"
+      },
+      {
+        "title": "Advanced RAG 06: Exploring Query Rewriting | by Florian June | Medium",
+        "url": "https://medium.com/@florian_algo/advanced-rag-06-exploring-query-rewriting-23997297f2d1"
+      },
+      {
+        "title": "Query Transform Cookbook - LlamaIndex",
+        "url": "https://docs.llamaindex.ai/en/stable/examples/query_transformations/query_transform_cookbook/"
+      },
+      {
+        "title": "AI news from AINIRO.IO",
+        "url": "https://ainiro.io/blog?p=3"
+      },
+      {
+        "title": "AI-8: Artificial intelligence undermines human creativity - Essays - Discuss & Discover",
+        "url": "https://discourse.suttacentral.net/t/ai-8-artificial-intelligence-undermines-human-creativity/33462"
+      },
+      {
+        "title": "Find and Buy with AI: Visa Unveils New Era of Commerce",
+        "url": "https://www.businesswire.com/news/home/20250430580204/en/Find-and-Buy-with-AI-Visa-Unveils-New-Era-of-Commerce"
+      },
+      {
+        "title": "Mastercard unveils Agent Pay, pioneering agentic payments technology to power commerce in the age of AI | Mastercard Newsroom",
+        "url": "https://www.mastercard.com/news/press/2025/april/mastercard-unveils-agent-pay-pioneering-agentic-payments-technology-to-power-commerce-in-the-age-of-ai/"
+      },
+      {
+        "title": "AI could choke on its own exhaust as it fills the web",
+        "url": "https://www.axios.com/2023/08/28/ai-content-flood-model-collapse"
+      },
+      {
+        "title": "2307.01850v1.pdf",
+        "url": "https://arxiv.org/pdf/2307.01850"
+      },
+      {
+        "title": "[2305.17493] The Curse of Recursion: Training on Generated Data Makes Models Forget",
+        "url": "https://arxiv.org/abs/2305.17493"
+      },
+      {
+        "title": "(7) Jathan Sadowski on X: \"I coined a term on @machinekillspod that I feel like needs its own essay: Habsburg AI – a system that is so heavily trained on the outputs of other generative AI's that it becomes an inbred mutant, likely with exaggerated, grotesque features. It joins the lineage of Potemkin AI.\" / X",
+        "url": "https://x.com/jathansadowski/status/1625245803211272194"
+      },
+      {
+        "title": "The Molecular Bond That Helps Secure Your Memories | Quanta Magazine",
+        "url": "https://www.quantamagazine.org/the-molecular-bond-that-helps-secure-your-memories-20250507/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "(11) The Insane Engineering of the B-2 Bomber - YouTube",
+        "url": "https://www.youtube.com/watch?v=1wMM87UKr_c"
+      },
+      {
+        "title": "(14) S400 missile System & Air Defence Missiles | How it Works #missile - YouTube",
+        "url": "https://www.youtube.com/watch?v=1VjERtz4LeY"
+      },
+      {
+        "title": "How OpenAI trained ChatGPT",
+        "url": "https://blog.quastor.org/p/openai-trained-chatgpt"
+      },
+      {
+        "title": "The Engineering Behind Instagram's Recommendations",
+        "url": "https://blog.quastor.org/p/engineering-behind-instagrams-recommendations"
+      },
+      {
+        "title": "The Architecture of Dropbox's Asynchronous Task Framework",
+        "url": "https://blog.quastor.org/p/architecture-dropboxs-asynchronous-task-framework"
+      },
+      {
+        "title": "How Canva Stores Tens of Billions of User Generated Media",
+        "url": "https://blog.quastor.org/p/canva-stores-tens-billions-user-generated-media"
+      },
+      {
+        "title": "Demystify Transformers: A Guide to Scaling Laws | by Yu-Cheng Tsai | Sage Ai | Medium",
+        "url": "https://medium.com/sage-ai/demystify-transformers-a-comprehensive-guide-to-scaling-laws-attention-mechanism-fine-tuning-fffb62fc2552"
+      },
+      {
+        "title": "Explaining Transformers as Simple as Possible through a Small Language Model | by Alex Punnen | Towards AI",
+        "url": "https://pub.towardsai.net/explaining-transformers-as-simple-as-possible-through-a-small-language-model-6e6038941ca7"
+      },
+      {
+        "title": "Medium",
+        "url": "https://medium.com/"
+      },
+      {
+        "title": "Attention : A Complete Guide to Transformers | Medium",
+        "url": "https://medium.com/@alejandro.itoaramendia/attention-is-all-you-need-a-complete-guide-to-transformers-8670a3f09d02"
+      },
+      {
+        "title": "Netflix’s Distributed Counter Abstraction | by Netflix Technology Blog | Netflix TechBlog",
+        "url": "https://netflixtechblog.com/netflixs-distributed-counter-abstraction-8d0c45eb66b2"
+      },
+      {
+        "title": "A Visual Guide to Quantization. Demystifying the compression of large… | by Maarten Grootendorst | TDS Archive | Medium",
+        "url": "https://medium.com/data-science/a-visual-guide-to-quantization-930ebcd9be94"
+      },
+      {
+        "title": "The records achieved during Kohli’s stunning Test career",
+        "url": "https://www.icc-cricket.com/news/the-records-achieved-during-kohli-s-stunning-test-career?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "The Cost of Chasing Passion Careers - Neuroscience News",
+        "url": "https://neurosciencenews.com/passion-career-psychology-28904/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "The Fastest Way Yet to Color Graphs | Quanta Magazine",
+        "url": "https://www.quantamagazine.org/the-fastest-way-yet-to-color-graphs-20250512/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "If Wi-Fi Can Go Through Walls, Why Is My Internet So Slow? - CNET",
+        "url": "https://www.cnet.com/home/internet/if-wi-fi-can-go-through-walls-why-is-my-internet-so-slow/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "Astronomers just found the smallest galaxy ever - Big Think",
+        "url": "https://bigthink.com/starts-with-a-bang/astronomers-smallest-galaxy-ever/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "Breaking Barriers: The Case for Rethinking Geopolitical Education in India - Modern Diplomacy",
+        "url": "https://moderndiplomacy.eu/2025/05/13/breaking-barriers-the-case-for-rethinking-geopolitical-education-in-india/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "People + AI Guidebook - Home",
+        "url": "https://pair.withgoogle.com/guidebook/"
+      },
+      {
+        "title": "These 3 Protocols Complete the Agent Stack : r/mcp",
+        "url": "https://www.reddit.com/r/mcp/comments/1kltb5f/these_3_protocols_complete_the_agent_stack/"
+      },
+      {
+        "title": "[1hr Talk] Intro to Large Language Models - YouTube",
+        "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g"
+      },
+      {
+        "title": "Qualcomm Launches On-Prem AI Appliance Solution and Inference Suite to Step-Up AI Inference Privacy, Flexibility and Costs Savings Across Enterprise and Industrial Verticals | Qualcomm",
+        "url": "https://www.qualcomm.com/news/releases/2025/01/qualcomm-launches-on-prem-ai-appliance-solution-and-inference-su?utm_source=chatgpt.com"
+      },
+      {
+        "title": "DGX SuperPOD: AI Infrastructure for Enterprise Deployments | NVIDIA",
+        "url": "https://www.nvidia.com/en-us/data-center/dgx-superpod/?utm_source=chatgpt.com"
+      },
+      {
+        "title": "Text content does not match server-rendered HTML | Next.js",
+        "url": "https://nextjs.org/docs/messages/react-hydration-error"
+      },
+      {
+        "title": "Software Engineer, Frontend Infrastructure @ Replit",
+        "url": "https://jobs.ashbyhq.com/replit/414d7eba-67b2-436f-826e-3a78a5ba303a"
+      },
+      {
+        "title": "Buy Prime High Back Knitted Fabric Ergonomic Office Chair (Black Ink) | Godrej Interio",
+        "url": "https://www.godrejinterio.com/furniture-online-prime-high-back-knitted-fabric-ergonomic-office-chair-(black-ink)-1-year-warranty-adjustable-armrest/PRIME0010"
+      },
+      {
+        "title": "Amazon invents another robot — this time with feeling! – Computerworld",
+        "url": "https://www.computerworld.com/article/3985803/amazon-invents-another-robot-this-time-with-feeling.html?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "BIO / IOB Tagged Text to Original Text | by Jeril Kuriakose | Analytics Vidhya | Medium",
+        "url": "https://medium.com/analytics-vidhya/bio-tagged-text-to-original-text-99b05da6664"
+      },
+      {
+        "title": "You Don’t Know Yourself as Well as You Think You Do - The Atlantic",
+        "url": "https://www.theatlantic.com/family/archive/2025/06/know-thyself-limits/682967/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "Introducing our Dev Mode MCP server: Bringing Figma into your workflow | Figma Blog",
+        "url": "https://www.figma.com/blog/introducing-figmas-dev-mode-mcp-server/"
+      },
+      {
+        "title": "Zipf's law - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Zipf%27s_law"
+      },
+      {
+        "title": "Decisions in Leadership Are Both a Burden and Joy",
+        "url": "https://www.inc.com/jerry-colonna/how-to-detach-self-worth-from-leadership-decisions/91180129?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "Why AI security playbooks need perpetual updating",
+        "url": "https://www.axios.com/2025/06/06/ai-security-playbook-change-speed?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "Deep listening is a radical act of empathy – here's how to practice it - Big Issue",
+        "url": "https://www.bigissue.com/life/health/deep-listening-how-to/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "A 1,500-Year-Old Map Helped Researchers Find a Lost Byzantine City",
+        "url": "https://www.popularmechanics.com/science/archaeology/a64978262/tharais-byzantine-lost-city/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "This is what it's like onboard the Golden Eagle’s new Paris-Istanbul route | CN Traveller",
+        "url": "https://www.cntraveller.com/article/what-its-like-onboard-the-golden-eagles-new-paris-istanbul-route?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "Meet the Cisco Deep Network Model: Trained by the Experts, Purpose-Built for the Network - Cisco Blogs",
+        "url": "https://blogs.cisco.com/networking/meet-the-cisco-deep-network-model-trained-by-the-experts-purpose-built-for-the-network"
+      },
+      {
+        "title": "Massive DDoS attack delivered 37.4TB in 45 seconds, equivalent to 10,000 HD movies, to one victim IP address — Cloudflare blocks largest cyber assault ever recorded | Tom's Hardware",
+        "url": "https://www.tomshardware.com/tech-industry/cyber-security/massive-ddos-attack-delivered-37-4tb-in-45-seconds-equivalent-to-10-000-hd-movies-to-one-victim-ip-address-cloudflare-blocks-largest-cyber-assault-ever-recorded"
+      },
+      {
+        "title": "To Break a Bad Habit and Create a New One, Neuroscience Says Just Make One Simple Change",
+        "url": "https://www.inc.com/jeff-haden/to-break-a-bad-habit-and-create-a-new-one-neuroscience-says-just-make-one-simple-change/91204388?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "Coleman–Liau index - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Coleman%E2%80%93Liau_index"
+      },
+      {
+        "title": "Agentic Misalignment: How LLMs could be insider threats \\ Anthropic",
+        "url": "https://www.anthropic.com/research/agentic-misalignment"
+      },
+      {
+        "title": "Copilot coding agent now has its own web browser - GitHub Changelog",
+        "url": "https://github.blog/changelog/2025-07-02-copilot-coding-agent-now-has-its-own-web-browser/"
+      },
+      {
+        "title": "zstd package - github.com/klauspost/compress/zstd - Go Packages",
+        "url": "https://pkg.go.dev/github.com/klauspost/compress@v1.17.11/zstd"
+      },
+      {
+        "title": "Senior / Staff Product Engineer - Linear Careers",
+        "url": "https://linear.app/careers/069c4628-88d7-4e4d-b393-c996fc7f3076?ashby_jid=12f8f208-0b9c-4569-bb3d-41c8a197029e"
+      },
+      {
+        "title": "BrowndField_Migration_SA.pptx",
+        "url": "https://cisco-my.sharepoint.com/:p:/r/personal/angoli_cisco_com/_layouts/15/Doc.aspx?sourcedoc=%7B9734D60B-CBD2-485E-91EC-18E090D71BB1%7D&file=BrowndField_Migration_SA.pptx&action=edit&mobileredirect=true&DefaultItemOpen=1&ct=1751023876240&wdOrigin=OFFICECOM-WEB.START.EDGEWORTH&cid=a809f323-4456-4e46-91f5-a325e757a3a1&wdPreviousSessionSrc=HarmonyWeb&wdPreviousSession=5d4872a4-dce5-4c96-bb4f-524dc356cd74"
+      },
+      {
+        "title": "Small Language Models (SLMs) [2024 overview] | SuperAnnotate",
+        "url": "https://www.superannotate.com/blog/small-language-models"
+      },
+      {
+        "title": "Small Language Models are the Future of Agentic AI - 2506.02153v1.pdf",
+        "url": "https://arxiv.org/pdf/2506.02153"
+      },
+      {
+        "title": "Small Language Models are the Future of Agentic AI",
+        "url": "https://research.nvidia.com/labs/lpr/slm-agents/"
+      },
+      {
+        "title": "NVIDIA Releases Small Language Model With State-of-the-Art Accuracy | NVIDIA Blog",
+        "url": "https://blogs.nvidia.com/blog/mistral-nemo-minitron-8b-small-language-model/"
+      },
+      {
+        "title": "What Are Small Language Models (SLMs)? | Microsoft Azure",
+        "url": "https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-are-small-language-models"
+      },
+      {
+        "title": "Small Language Models (SLM): A Comprehensive Overview",
+        "url": "https://huggingface.co/blog/jjokah/small-language-model"
+      },
+      {
+        "title": "DeepResearch Bench: A Comprehensive Benchmark for Deep Research Agents - deepresearch-bench.pdf",
+        "url": "https://deepresearch-bench.github.io/static/papers/deepresearch-bench.pdf"
+      },
+      {
+        "title": "Introducing Kiro - Kiro",
+        "url": "https://kiro.dev/blog/introducing-kiro/"
+      },
+      {
+        "title": "Mathematicians Uncover a New Way to Count Prime Numbers | Quanta Magazine",
+        "url": "https://www.quantamagazine.org/mathematicians-uncover-a-new-way-to-count-prime-numbers-20241211/?utm_source=firefox-newtab-en-intl"
+      },
+      {
+        "title": "Web cache deception | Web Security Academy",
+        "url": "https://portswigger.net/web-security/web-cache-deception"
+      },
+      {
+        "title": "Agents Companion | Kaggle",
+        "url": "https://www.kaggle.com/whitepaper-agent-companion"
+      },
+      {
+        "title": "Vector Indexing | Weaviate Documentation",
+        "url": "https://docs.weaviate.io/weaviate/concepts/vector-index#hierarchical-navigable-small-world-hnsw-index"
+      },
+      {
+        "title": "Temporal Agents with Knowledge Graphs",
+        "url": "https://cookbook.openai.com/examples/partners/temporal_agents_with_knowledge_graphs/temporal_agents_with_knowledge_graphs#1-executive-summary"
+      },
+      {
+        "title": "SemiAnalysis – Bridging the gap between the world's most important industry, semiconductors, and business.",
+        "url": "https://semianalysis.com/"
+      },
+      {
+        "title": "Groq is fast inference for AI builders",
+        "url": "https://groq.com/"
+      },
+      {
+        "title": "(5) Get FASTER Fingers In 1 WEEK - #1 Finger Exercise for Guitar - YouTube",
+        "url": "https://www.youtube.com/watch?v=sf-RI1YPvqY"
+      },
+      {
+        "title": "Chip Huyen",
+        "url": "https://huyenchip.com/"
+      },
+      {
+        "title": "Welcome - GraphRAG",
+        "url": "https://microsoft.github.io/graphrag/"
+      },
+      {
+        "title": "Temporal Agents with Knowledge Graphs",
+        "url": "https://cookbook.openai.com/examples/partners/temporal_agents_with_knowledge_graphs/temporal_agents_with_knowledge_graphs#1-executive-summary"
+      },
+      {
+        "title": "https://learnmongodbthehardway.com/article/transactions/",
+        "url": "https://learnmongodbthehardway.com/article/transactions/"
+      },
+      {
+        "title": "MongoDB — Measuring the Effectiveness of Shard Keys | by Joe Nyirenda | Medium",
+        "url": "https://medium.com/@joseph.nyirenda/mongodb-measuring-the-effectiveness-of-shard-keys-f5f4bdcc4e4f"
+      },
+      {
+        "title": "Visualize your RAG Data — Evaluate your Retrieval-Augmented Generation System with Ragas | by Markus Stoll | TDS Archive | Medium",
+        "url": "https://medium.com/data-science/visualize-your-rag-data-evaluate-your-retrieval-augmented-generation-system-with-ragas-fc2486308557"
+      },
+      {
+        "title": "Blue-green Deployments, A/B Testing, and Canary Releases – ceposta Technology Blog",
+        "url": "https://blog.christianposta.com/deploy/blue-green-deployments-a-b-testing-and-canary-releases/"
+      },
+      {
+        "title": "[2506.10424] SOFT: Selective Data Obfuscation for Protecting LLM Fine-tuning against Membership Inference Attacks",
+        "url": "https://arxiv.org/abs/2506.10424"
+      },
+      {
+        "title": "[2505.18397] An Outlook on the Opportunities and Challenges of Multi-Agent AI Systems",
+        "url": "https://arxiv.org/abs/2505.18397"
+      },
+      {
+        "title": "What Is LLM Red Teaming? | DeepTeam - The Open-Source LLM Red Teaming Framework",
+        "url": "https://www.trydeepteam.com/docs/what-is-llm-red-teaming"
+      },
+      {
+        "title": "Google Releases Mangle: A Programming Language for Deductive Database Programming - MarkTechPost",
+        "url": "https://www.marktechpost.com/2025/08/22/google-releases-mangle-a-programming-language-for-deductive-database-programming/?amp"
+      },
+      {
+        "title": "Marktechpost/AI-Tutorial-Codes-Included: Codes/Notebooks for AI Projects",
+        "url": "https://github.com/Marktechpost/AI-Tutorial-Codes-Included"
+      },
+      {
+        "title": "How to Build an Advanced Multi-Page Reflex Web Application with Real-Time Database, Dynamic State Management, and Reactive UI - MarkTechPost",
+        "url": "https://www.marktechpost.com/2025/11/08/how-to-build-an-advanced-multi-page-reflex-web-application-with-real-time-database-dynamic-state-management-and-reactive-ui/?amp"
+      },
+      {
+        "title": "Why Spatial Supersensing is Emerging as the Core Capability for Multimodal AI Systems? - MarkTechPost",
+        "url": "https://www.marktechpost.com/2025/11/07/why-spatial-supersensing-is-emerging-as-the-core-capability-for-multimodal-ai-systems/?amp"
+      },
+      {
+        "title": "We must build AI for people; not to be a person.",
+        "url": "https://mustafa-suleyman.ai/seemingly-conscious-ai-is-coming"
+      },
+      {
+        "title": "One Month in MCP: What I Learned the Hard Way : r/mcp",
+        "url": "https://www.reddit.com/r/mcp/comments/1mub6g6/one_month_in_mcp_what_i_learned_the_hard_way/"
+      },
+      {
+        "title": "The Illustrated GPT-OSS - by Jay Alammar",
+        "url": "https://newsletter.languagemodels.co/p/the-illustrated-gpt-oss"
+      },
+      {
+        "title": "AI Comes Up with Bizarre Physics Experiments. But They Work. | Quanta Magazine",
+        "url": "https://www.quantamagazine.org/ai-comes-up-with-bizarre-physics-experiments-but-they-work-20250721/"
+      },
+      {
+        "title": "On-Demand Session Library - Cisco Live On-Demand - Cisco",
+        "url": "https://www.ciscolive.com/on-demand/on-demand-library.html?search=delisser#/session/1750271957058001z32h"
+      },
+      {
+        "title": "LiveMCPBench: Can Agents Navigate an Ocean of MCP Tools?",
+        "url": "https://icip-cas.github.io/LiveMCPBench/"
+      },
+      {
+        "title": "Large Language Models Do Not Simulate Human Psychology - 2508.06950v3.pdf",
+        "url": "https://arxiv.org/pdf/2508.06950"
+      },
+      {
+        "title": "GPT-5 prompting guide",
+        "url": "https://cookbook.openai.com/examples/gpt-5/gpt-5_prompting_guide"
+      },
+      {
+        "title": "gpt-oss: How to Run & Fine-tune | Unsloth Documentation",
+        "url": "https://docs.unsloth.ai/models/gpt-oss-how-to-run-and-fine-tune"
+      },
+      {
+        "title": "unslothai/unsloth: Fine-tuning & Reinforcement Learning for LLMs. 🦥 Train OpenAI gpt-oss, DeepSeek-R1, Qwen3, Gemma 3, TTS 2x faster with 70% less VRAM.",
+        "url": "https://github.com/unslothai/unsloth"
+      },
+      {
+        "title": "gpt-oss-(20B)-Fine-tuning.ipynb - Colab",
+        "url": "https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/gpt-oss-(20B)-Fine-tuning.ipynb"
+      },
+      {
+        "title": "Foundation AI Advances AI Security With Hugging Face",
+        "url": "https://blogs.cisco.com/security/ciscos-foundation-ai-advances-ai-supply-chain-security-with-hugging-face"
+      },
+      {
+        "title": "Qwen3-Max arrives in preview with 1 trillion parameters, blazing fast response speed, and API availability | VentureBeat",
+        "url": "https://venturebeat.com/ai/qwen3-max-arrives-in-preview-with-1-trillion-parameters-blazing-fast"
+      },
+      {
+        "title": "github/spec-kit: 💫 Toolkit to help you get started with Spec-Driven Development",
+        "url": "https://github.com/github/spec-kit"
+      },
+      {
+        "title": "Expanding economic opportunity with AI | OpenAI",
+        "url": "https://openai.com/index/expanding-economic-opportunity-with-ai/"
+      },
+      {
+        "title": "AI_LLM/mcp-demo/indirect-prompt-injection at main · CSDL/AI_LLM",
+        "url": "https://wwwin-github.cisco.com/CSDL/AI_LLM/tree/main/mcp-demo/indirect-prompt-injection"
+      },
+      {
+        "title": "Cisco's AI Canvas goes beyond where SaaS and AIOps fall short - Techzine Global",
+        "url": "https://www.techzine.eu/blogs/applications/134359/ciscos-ai-canvas-goes-beyond-where-saas-and-aiops-fall-short/"
+      },
+      {
+        "title": "Modeling Agent Memory - Graph Database & Analytics",
+        "url": "https://neo4j.com/blog/developer/modeling-agent-memory/"
+      },
+      {
+        "title": "ELI5: How does ChatGPT's memory actually work behind the scenes? : r/OpenAI",
+        "url": "https://www.reddit.com/r/OpenAI/comments/1jy3e6z/eli5_how_does_chatgpts_memory_actually_work/"
+      },
+      {
+        "title": "(4) How might LLMs store facts | Deep Learning Chapter 7 - YouTube",
+        "url": "https://www.youtube.com/watch?v=9-Jl0dxWQs8&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=9"
+      },
+      {
+        "title": "Changes in langchain and langgraph v1 samperalabs",
+        "url": "https://samperalabs.com/posts/changes-in-langchain-and-langgraph-v1"
+      },
+      {
+        "title": "Write-Ahead Log | Kartikey Kumar Srivastava | 22 comments",
+        "url": "https://www.linkedin.com/posts/kartikey-kumar-srivastava-3969b8aa_write-ahead-log-activity-7369949985121120256-rmgt/?utm_source=share&utm_medium=member_desktop&rcm=ACoAACp79MEBQJRztL9DApa3RN80udHM7ZTbxwY"
+      },
+      {
+        "title": "Vidcast - AI Defense Private Preview - End-to-End Demo",
+        "url": "https://app.vidcast.io/share/394f50b9-07c4-4336-bfb8-b14f09603683"
+      },
+      {
+        "title": "Protecting AI so AI Can Improve the World, Safely - Cisco Blogs",
+        "url": "https://blogs.cisco.com/news/you-cant-sacrifice-ai-safety-for-ai-speed"
+      },
+      {
+        "title": "Cisco AI Defense: Security for Enterprise AI Adoption",
+        "url": "https://blogs.cisco.com/security/cisco-ai-defense-comprehensive-security-for-enterprise-ai-adoption"
+      },
+      {
+        "title": "Security for AI - Cisco Blogs",
+        "url": "https://blogs.cisco.com/tag/security-for-ai"
+      },
+      {
+        "title": "The 95% AI Failure Rate: What MIT Got Right, and Why They’re Still Dangerously Wrong | by Álex Martínez Corriá | Shift Signal | Sep, 2025 | Medium",
+        "url": "https://medium.com/shift-signal/the-95-ai-failure-rate-what-mit-got-right-and-why-theyre-still-dangerously-wrong-d2544559b528"
+      },
+      {
+        "title": "I've Vastly Misunderstood the Single Responsibility Principle : r/programming",
+        "url": "https://www.reddit.com/r/programming/comments/18mj2pt/ive_vastly_misunderstood_the_single/?rdt=33988"
+      },
+      {
+        "title": "(5) Large Language Models explained briefly - YouTube",
+        "url": "https://www.youtube.com/watch?v=LPZh9BOjkQs&t=6s"
+      },
+      {
+        "title": "How might LLMs store facts | Deep Learning Chapter 7 - YouTube",
+        "url": "https://www.youtube.com/watch?v=9-Jl0dxWQs8&t=14s"
+      },
+      {
+        "title": "What Are Word Embeddings? - YouTube",
+        "url": "https://www.youtube.com/watch?v=hVM8qGRTaOA"
+      },
+      {
+        "title": "Nobody Explained Machine Learning Frameworks Like This Before! - YouTube",
+        "url": "https://www.youtube.com/watch?v=NSfE0BN5DIY"
+      },
+      {
+        "title": "Transformers, the tech behind LLMs | Deep Learning Chapter 5 - YouTube",
+        "url": "https://www.youtube.com/watch?v=wjZofJX0v4M"
+      },
+      {
+        "title": "(1) The AI Scaling Problem - YouTube",
+        "url": "https://www.youtube.com/watch?v=COOAssGkF6I"
+      },
+      {
+        "title": "Natural Language Processing with Transformers, Revised Edition",
+        "url": "https://learning.oreilly.com/library/view/natural-language-processing/9781098136789/"
+      },
+      {
+        "title": "1. Overview of Machine Learning Systems | Designing Machine Learning Systems",
+        "url": "https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/ch01.html#when_to_use_machine_learning"
+      },
+      {
+        "title": "1. Overview of Machine Learning Systems | Designing Machine Learning Systems",
+        "url": "https://learning.oreilly.com/library/view/designing-machine-learning/9781098107956/ch01.html#machine_learning_systems_versus_traditi"
+      },
+      {
+        "title": "Software 2.0. I sometimes see people refer to neural… | by Andrej Karpathy | Medium",
+        "url": "https://karpathy.medium.com/software-2-0-a64152b37c35"
+      },
+      {
+        "title": "[1706.05137] One Model To Learn Them All",
+        "url": "https://arxiv.org/abs/1706.05137"
+      },
+      {
+        "title": "[1712.01208] The Case for Learned Index Structures",
+        "url": "https://arxiv.org/abs/1712.01208"
+      },
+      {
+        "title": "Akamai Online Retail Performance Report: Milliseconds Are Critical",
+        "url": "https://www.prnewswire.com/news-releases/akamai-online-retail-performance-report-milliseconds-are-critical-300441498.html"
+      },
+      {
+        "title": "The Mental Game of Python, by Raymond Hettinger – paulvanderlaken.com",
+        "url": "https://paulvanderlaken.com/2019/11/20/the-mental-game-of-python-by-raymond-hettinger/"
+      },
+      {
+        "title": "What does Palantir actually do? - YouTube",
+        "url": "https://www.youtube.com/watch?v=KipDBa4bTl8"
+      },
+      {
+        "title": "A Once-in-a-Century Proof: The Kakeya Conjecture - YouTube",
+        "url": "https://www.youtube.com/watch?v=5J3tYU_-IZI"
+      },
+      {
+        "title": "What is a Hilbert Space? - YouTube",
+        "url": "https://www.youtube.com/watch?v=FFPXm-tuOt8"
+      },
+      {
+        "title": "Hilbert's Curve: Is infinite math useful? - YouTube",
+        "url": "https://www.youtube.com/watch?v=3s7h2MHQtxc"
+      },
+      {
+        "title": "Visualization of Quantum Physics (Quantum Mechanics) - YouTube",
+        "url": "https://www.youtube.com/watch?v=p7bzE1E5PMY"
+      },
+      {
+        "title": "this website is insane (stack explained) - YouTube",
+        "url": "https://www.youtube.com/watch?v=HzL65tTeANs"
+      },
+      {
+        "title": "How Your Code Really Controls Hardware - YouTube",
+        "url": "https://www.youtube.com/watch?v=sp3mMwo3PO0"
+      },
+      {
+        "title": "The AI Scaling Problem - YouTube",
+        "url": "https://www.youtube.com/watch?v=COOAssGkF6I"
+      },
+      {
+        "title": "Full over: Johnson destroys England with searing Ashes over - YouTube",
+        "url": "https://www.youtube.com/watch?v=zNokixQnb04"
+      },
+      {
+        "title": "Micro-interactions to delight your users: what, when and how - YouTube",
+        "url": "https://www.youtube.com/watch?v=jgrkV_hJdJw"
+      },
+      {
+        "title": "14 DevTools Tricks That`ll Make You a Better Developer - YouTube",
+        "url": "https://www.youtube.com/watch?v=pw14NzfYPa8"
+      },
+      {
+        "title": "What's so special about Euler's number e? | Chapter 5, Essence of calculus - YouTube",
+        "url": "https://www.youtube.com/watch?v=m2MIpDrF7Es"
+      },
+      {
+        "title": "The Math Needed for AI/ML (Complete Roadmap) - YouTube",
+        "url": "https://www.youtube.com/watch?v=YZOAiJmnNvc"
+      },
+      {
+        "title": "Logistic Regression (and why it's different from Linear Regression) - YouTube",
+        "url": "https://www.youtube.com/watch?v=3bvM3NyMiE0"
+      },
+      {
+        "title": "This open problem taught me what topology is - YouTube",
+        "url": "https://www.youtube.com/watch?v=IQqtsm-bBRU"
+      },
+      {
+        "title": "math animations derivatives - YouTube",
+        "url": "https://www.youtube.com/watch?v=53R2f5PLf7k"
+      },
+      {
+        "title": "The other way to visualize derivatives | Chapter 12, Essence of calculus - YouTube",
+        "url": "https://www.youtube.com/watch?v=CfW845LNObM"
+      },
+      {
+        "title": "Visualisation of Derivatives - YouTube",
+        "url": "https://www.youtube.com/watch?v=vBU76VsFrEM"
+      },
+      {
+        "title": "What is Jacobian? | The right way of thinking derivatives and integrals - YouTube",
+        "url": "https://www.youtube.com/watch?v=wCZ1VEmVjVo"
+      },
+      {
+        "title": "Building Machine Learning Systems for a Trillion Trillion Floating Point Operations - YouTube",
+        "url": "https://www.youtube.com/watch?v=139UPjoq7Kw"
+      },
+      {
+        "title": "But how do AI images and videos actually work? | Guest video by Welch Labs - YouTube",
+        "url": "https://www.youtube.com/watch?v=iv-5mZ_9CPY&t=1s"
+      },
+      {
+        "title": "Gradients and Partial Derivatives - YouTube",
+        "url": "https://www.youtube.com/watch?v=GkB4vW16QHI"
+      },
+      {
+        "title": "What's The Difference Between Matrices And Tensors? - YouTube",
+        "url": "https://www.youtube.com/watch?v=1GwAEnegaRs"
+      },
+      {
+        "title": "But what is a partial differential equation? | DE2 - YouTube",
+        "url": "https://www.youtube.com/watch?v=ly4S0oi3Yz8"
+      },
+      {
+        "title": "Gradient descent stanford mit - YouTube",
+        "url": "https://www.youtube.com/results?search_query=Gradient+descent+stanford+mit"
+      },
+      {
+        "title": "Gradient Descent in 3 minutes - YouTube",
+        "url": "https://www.youtube.com/watch?v=qg4PchTECck&t=70s"
+      },
+      {
+        "title": "Lecture 10 - Decision Trees and Ensemble Methods | Stanford CS229: Machine Learning (Autumn 2018) - YouTube",
+        "url": "https://www.youtube.com/watch?v=wr9gUr-eWdA"
+      },
+      {
+        "title": "25. Stochastic Gradient Descent - YouTube",
+        "url": "https://www.youtube.com/watch?v=k3AiUhwHQ28"
+      },
+      {
+        "title": "[Full Workshop] Reinforcement Learning, Kernels, Reasoning, Quantization & Agents — Daniel Han - YouTube",
+        "url": "https://www.youtube.com/watch?v=OkEGJ5G3foU"
+      },
+      {
+        "title": "Convex Optimization Basics - YouTube",
+        "url": "https://www.youtube.com/watch?v=oLowhs83aHk"
+      },
+      {
+        "title": "The Strange Math That Predicts (Almost) Anything - YouTube",
+        "url": "https://www.youtube.com/watch?v=KZeIEiBrT_w&t=88s"
+      },
+      {
+        "title": "NVIDIA Just Solved The Hardest Problem in Physics Simulation! - YouTube",
+        "url": "https://www.youtube.com/watch?v=7NF3CdXkm68"
+      },
+      {
+        "title": "A Once-in-a-Century Proof: The Kakeya Conjecture - YouTube",
+        "url": "https://www.youtube.com/watch?v=5J3tYU_-IZI"
+      },
+      {
+        "title": "The Math Needed for AI/ML (Complete Roadmap) - YouTube",
+        "url": "https://www.youtube.com/watch?v=YZOAiJmnNvc"
+      },
+      {
+        "title": "NEW SUSPICIOUS VAC Moments by CS2 Pros - YouTube",
+        "url": "https://www.youtube.com/watch?v=T4VkydSE3Js"
+      },
+      {
+        "title": "If Not Bubble... Why Bubble Shaped? - YouTube",
+        "url": "https://www.youtube.com/watch?v=tAXKxKTGWFQ"
+      },
+      {
+        "title": "If You Don't Understand Bonds, You Don't Understand Money - YouTube",
+        "url": "https://www.youtube.com/watch?v=7d9Lz0D0uzA"
+      },
+      {
+        "title": "15 Frontend Concepts Every Senior Dev Has Mastered - YouTube",
+        "url": "https://www.youtube.com/watch?v=tHbrjCtNx7Q"
+      },
+      {
+        "title": "What does Oracle actually do? - YouTube",
+        "url": "https://www.youtube.com/watch?v=KW80Yjib7RA"
+      },
+      {
+        "title": "Learn Node.js. Get Hired | Complete Node JS Developer | Zero To Mastery",
+        "url": "https://zerotomastery.io/courses/learn-node-js/?utm_source=chatgpt.com#Curriculum"
+      },
+      {
+        "title": "fifocode/nodejs-backend-architecture-typescript: Node.js Backend Architecture Typescript - Learn to build a backend server for production ready blogging platform like Medium and FreeCodeCamp. Main Features: Role based, Express.js, Mongoose, Redis, Mongodb, Joi, Docker, JWT, Unit Tests, Integration Tests.",
+        "url": "https://github.com/fifocode/nodejs-backend-architecture-typescript?utm_source=chatgpt.com"
+      },
+      {
+        "title": "Create an Express Application - API Design in Node.js, v5 | Frontend Masters",
+        "url": "https://frontendmasters.com/courses/api-design-nodejs-v5/create-an-express-application/"
+      },
+      {
+        "title": "Meet the Power Players at Elon Musk's Startup XAI - Business Insider",
+        "url": "https://www.businessinsider.com/xai-power-players-elon-musk-startup-grok-2024-12?utm_source=chatgpt.com"
+      },
+      {
+        "title": "Elon Musk Unveils New Company XAI With Listed All-Male Team - Business Insider",
+        "url": "https://www.businessinsider.com/elon-musk-new-company-xai-website-2023-7"
+      },
+      {
+        "title": "XAI Is Expanding Its Memphis Supercomputer to House 1 Million GPUs - Business Insider",
+        "url": "https://www.businessinsider.com/xai-memphis-supercomputer-gpus-2024-12"
+      }
+    ]
+  },
+  {
+    "browser": "firefox",
+    "windowId": null,
+    "tabs": [
+      {
+        "title": "My 2.5 year old laptop can write Space Invaders in JavaScript now, using GLM-4.5 Air and MLX",
+        "url": "https://simonwillison.net/2025/Jul/29/space-invaders/"
+      },
+      {
+        "title": "runon_ai_assist_dev - LangSmith",
+        "url": "https://ai-insights.cisco.com/o/20d4f67c-cb6d-4e32-a9d2-0a2c7c05766c/projects/p/5a0b21b6-0c4c-4954-b990-28729768cd35?timeModel=%7B%22duration%22%3A%227d%22%7D&peek=b2625eaa-de9f-414c-b28d-8378270bda0a&peeked_trace=b2625eaa-de9f-414c-b28d-8378270bda0a&runtab=0"
+      },
+      {
+        "title": "Advanced RAG techniques part 1: Data processing - Elasticsearch Labs",
+        "url": "https://www.elastic.co/search-labs/blog/advanced-rag-techniques-part-1?utm_source=chatgpt.com"
+      },
+      {
+        "title": "Search and Retrieval Techniques for RAG Systems | by Aasim Qureshi | Medium",
+        "url": "https://medium.com/%40itisaasim/search-and-retrieval-techniques-for-rag-systems-cade0df9b362"
+      },
+      {
+        "title": "Deep Agents",
+        "url": "https://blog.langchain.com/deep-agents/"
+      },
+      {
+        "title": "langchain-ai/deepagents",
+        "url": "https://github.com/langchain-ai/deepagents"
+      },
+      {
+        "title": "meirwah/awesome-workflow-engines: A curated list of awesome open source workflow engines",
+        "url": "https://github.com/meirwah/awesome-workflow-engines"
+      },
+      {
+        "title": "gpt-oss just dropped. OpenAI’s open-weight models are wild. 120B = o4-mini. 20B runs on MacBooks. : r/ChatGPT",
+        "url": "https://www.reddit.com/r/ChatGPT/comments/1mig3au/gptoss_just_dropped_openais_openweight_models_are/"
+      },
+      {
+        "title": "Is OpenAI destroying their models by quantizing them to save computational cost? : r/OpenAI",
+        "url": "https://www.reddit.com/r/OpenAI/comments/1lrk7o5/is_openai_destroying_their_models_by_quantizing/"
+      },
+      {
+        "title": "🚀 OpenAI released their open-weight models!!! : r/LocalLLaMA",
+        "url": "https://www.reddit.com/r/LocalLLaMA/comments/1miezct/openai_released_their_openweight_models/"
+      },
+      {
+        "title": "Subliminal Learning: LLMs Transmit Behavioral Traits via Hidden Signals in Data — AI Alignment Forum",
+        "url": "https://www.alignmentforum.org/posts/cGcwQDKAKbQ68BGuR/subliminal-learning-llms-transmit-behavioral-traits-via"
+      },
+      {
+        "title": "evals/docs/build-eval.md at main · openai/evals",
+        "url": "https://github.com/openai/evals/blob/main/docs/build-eval.md"
+      },
+      {
+        "title": "How CodeRabbit built its AI code review agent with Google Cloud Run | Google Cloud Blog",
+        "url": "https://cloud.google.com/blog/products/ai-machine-learning/how-coderabbit-built-its-ai-code-review-agent-with-google-cloud-run"
+      },
+      {
+        "title": "Benchmarking GPT-5: Why it's a generational leap in reasoning",
+        "url": "https://www.coderabbit.ai/blog/benchmarking-gpt-5-why-its-a-generational-leap-in-reasoning"
+      },
+      {
+        "title": "Transformer Circuits Thread",
+        "url": "https://transformer-circuits.pub/"
+      },
+      {
+        "title": "Secure Agentic System Design - A Trait-Based Approach | CSA",
+        "url": "https://cloudsecurityalliance.org/artifacts/secure-agentic-system-design"
+      },
+      {
+        "title": "mcp-server-security/MCP-Security-Whitepaper.md at main · cisco-genai/mcp-server-security",
+        "url": "https://github.com/cisco-genai/mcp-server-security/blob/main/MCP-Security-Whitepaper.md"
+      },
+      {
+        "title": "(3) Feed | LinkedIn",
+        "url": "https://www.linkedin.com/feed/"
+      },
+      {
+        "title": "In todays landscape, we do not have a way to have true observability AI...",
+        "url": "https://www.perplexity.ai/search/in-todays-landscape-we-do-not-uEugXdckQVW2Vo9YkTD0Sg"
+      },
+      {
+        "title": "No Backdoors. No Kill Switches. No Spyware. | NVIDIA Blog",
+        "url": "https://blogs.nvidia.com/blog/no-backdoors-no-kill-switches-no-spyware/"
+      },
+      {
+        "title": "AI Threat Detection: Leverage AI to Detect Security Threats",
+        "url": "https://www.sentinelone.com/cybersecurity-101/data-and-ai/ai-threat-detection/"
+      },
+      {
+        "title": "Protect your AI applications in real time — Robust Intelligence",
+        "url": "https://www.robustintelligence.com/platform/ai-firewall-guardrails"
+      },
+      {
+        "title": "Interoperability and Explicable AI-based Zero-Day Attacks Detection Process in Smart Community",
+        "url": "https://arxiv.org/html/2408.02921v1"
+      },
+      {
+        "title": "AI Threat Detection in Cybersecurity | Gurucul",
+        "url": "https://gurucul.com/blog/ai-threat-detection-in-cybersecurity/"
+      },
+      {
+        "title": "AI in Cybersecurity: Special Supplement to the NACD-ISA Director's Hankbook on Cyber-Risk Oversight - nacd_ai-cybersecurity-handbook.pdf",
+        "url": "https://www.nacdonline.org/globalassets/public-pdfs/nacd_ai-cybersecurity-handbook.pdf"
+      },
+      {
+        "title": "Beyond a Kill Switch: Safeguarding the Future of AI",
+        "url": "https://www.politico.com/sponsored/2025/02/beyond-a-kill-switch-safeguarding-the-future-of-ai/"
+      },
+      {
+        "title": "Single Pane of Glass Monitoring - IBM Instana Observability",
+        "url": "https://www.ibm.com/products/instana/single-pane-of-glass-monitoring"
+      },
+      {
+        "title": "Why AI needs a kill switch – just in case - Information Age",
+        "url": "https://www.information-age.com/why-ai-needs-a-kill-switch-just-in-case-123514591/"
+      },
+      {
+        "title": "Fiddler AI: AI Observability, Model Monitoring, LLM Monitoring, and Agentic Observability",
+        "url": "https://www.fiddler.ai/"
+      },
+      {
+        "title": "SaaS Security Use Case: Threat Detection for SaaS | AppOmni",
+        "url": "https://appomni.com/use-case/threat-detection/"
+      },
+      {
+        "title": "TF1_Khasru_et_al_rev.pdf",
+        "url": "https://www.cigionline.org/static/documents/TF1_Khasru_et_al_rev.pdf"
+      },
+      {
+        "title": "What Is the Role of AI in Threat Detection? - Palo Alto Networks",
+        "url": "https://www.paloaltonetworks.com/cyberpedia/ai-in-threat-detection"
+      },
+      {
+        "title": "AI Threat Detection: How It Works & 6 Real-World Applications",
+        "url": "https://www.oligo.security/academy/ai-threat-detection-how-it-works-6-real-world-applications"
+      },
+      {
+        "title": "Someone had to say it: Scientists propose AI apocalypse kill switches : r/Futurology",
+        "url": "https://www.reddit.com/r/Futurology/comments/1aylga7/someone_had_to_say_it_scientists_propose_ai/"
+      },
+      {
+        "title": ".conf25 Global Broadcast - Keynote - YouTube",
+        "url": "https://www.youtube.com/watch?v=A85xRhAdpTo"
+      },
+      {
+        "title": "What is an Air Gap and Why is it Important? | Rubrik",
+        "url": "https://www.rubrik.com/insights/what-is-an-air-gap-and-why-is-it-important"
+      },
+      {
+        "title": "lmcinnes/umap: Uniform Manifold Approximation and Projection",
+        "url": "https://github.com/lmcinnes/umap"
+      },
+      {
+        "title": "Announcing Model Context Protocol Support in Envoy AI Gateway | Envoy AI Gateway",
+        "url": "https://aigateway.envoyproxy.io/blog/mcp-implementation/"
+      },
+      {
+        "title": "Key components of a data-driven agentic AI application | AWS Database Blog",
+        "url": "https://aws.amazon.com/blogs/database/key-components-of-a-data-driven-agentic-ai-application/"
+      },
+      {
+        "title": "2210.03629v3.pdf",
+        "url": "https://arxiv.org/pdf/2210.03629"
+      },
+      {
+        "title": "eval-sys/mcpmark: MCPMark is a comprehensive, stress-testing MCP benchmark designed to evaluate model and agent capabilities in real-world MCP use.",
+        "url": "https://github.com/eval-sys/mcpmark"
+      },
+      {
+        "title": "Consistent Hashing: Easy Explanation - YouTube",
+        "url": "https://www.youtube.com/watch?v=vccwdhfqIrI"
+      },
+      {
+        "title": "(6) Island Perimeter | 3 Approaches | Google | Leetcode 463 | codestorywithMIK - YouTube",
+        "url": "https://www.youtube.com/watch?v=O34v6f6s3lQ"
+      },
+      {
+        "title": "Visit Array Positions to Maximize Score - LeetCode",
+        "url": "https://leetcode.com/problems/visit-array-positions-to-maximize-score/description/"
+      },
+      {
+        "title": "Making A Large Island - LeetCode",
+        "url": "https://leetcode.com/problems/making-a-large-island/?envType=company&envId=facebook&favoriteSlug=facebook-six-months"
+      },
+      {
+        "title": "LRU Cache - LeetCode",
+        "url": "https://leetcode.com/problems/lru-cache/description/?envType=company&envId=facebook&favoriteSlug=facebook-thirty-days"
+      },
+      {
+        "title": "Meta - Minimum Stickers Required - Discuss - LeetCode",
+        "url": "https://leetcode.com/discuss/post/4835013/meta-minimum-stickers-required-by-4sacpa-0rzx/"
+      },
+      {
+        "title": "Find the Minimum Amount of Time to Brew Potions - LeetCode",
+        "url": "https://leetcode.com/problems/find-the-minimum-amount-of-time-to-brew-potions/description/"
+      },
+      {
+        "title": "Minimum Number of Visited Cells in a Grid - LeetCode",
+        "url": "https://leetcode.com/problems/minimum-number-of-visited-cells-in-a-grid/description/"
+      },
+      {
+        "title": "Maximum Total Damage With Spell Casting | Simplified | Intuitive | Leetcode 3186 | codestorywithMIK - YouTube",
+        "url": "https://www.youtube.com/watch?v=i0hOOfgEJaU"
+      },
+      {
+        "title": "Inside a Real High-Frequency Trading System | HFT Architecture - YouTube",
+        "url": "https://www.youtube.com/watch?v=iwRaNYa8yTw"
+      },
+      {
+        "title": "Data Modeling in System Design Interviews w/ Meta Staff Engineer - YouTube",
+        "url": "https://www.youtube.com/watch?v=TUcPS6dsWx4"
+      },
+      {
+        "title": "Consistent Hashing: Easy Explanation - YouTube",
+        "url": "https://www.youtube.com/watch?v=vccwdhfqIrI"
+      },
+      {
+        "title": "Senior Software Engineer Tackles a Meta Phone Screen! (Leetcode 1891 Variant) - YouTube",
+        "url": "https://www.youtube.com/watch?v=OJBblEvnsOo"
+      },
+      {
+        "title": "But what is a neural network? | Deep learning chapter 1 - YouTube",
+        "url": "https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi"
+      },
+      {
+        "title": "Most devs don't understand how LLM tokens work - YouTube",
+        "url": "https://www.youtube.com/watch?v=nKSk_TiR8YA"
+      },
+      {
+        "title": "this website is insane (stack explained) - YouTube",
+        "url": "https://www.youtube.com/watch?v=HzL65tTeANs&t=297s"
+      },
+      {
+        "title": "Optimize web fonts  |  web.dev",
+        "url": "https://web.dev/learn/performance/optimize-web-fonts"
+      },
+      {
+        "title": "You Should Write An Agent · The Fly Blog",
+        "url": "https://fly.io/blog/everyone-write-an-agent/"
+      },
+      {
+        "title": "I think “agent” may finally have a widely enough agreed upon definition to be useful jargon now",
+        "url": "https://simonwillison.net/2025/Sep/18/agents/"
+      },
+      {
+        "title": "(3) Transformers Explained: The Secret Behind ChatGPT and Modern AI! | LinkedIn",
+        "url": "https://www.linkedin.com/pulse/transformers-explained-secret-behind-chatgpt-modern-ai-belagatti-pmtsc/"
+      }
+    ]
+  }
+]
