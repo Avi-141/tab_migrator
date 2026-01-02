@@ -6,7 +6,7 @@ Weft turns your browser tabs into a searchable, clustered knowledge graph. Inste
 
 **Think:** Obsidian graph view, but for the web you already opened.
 
-![Weft Demo](demo.gif)
+![Weft Demo](https://raw.githubusercontent.com/Avi-141/weft/main/demo.gif)
 
 ## Why Weft?
 
