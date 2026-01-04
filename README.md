@@ -21,7 +21,7 @@ Weft turns your browser tabs into a searchable, clustered knowledge graph. Inste
 
 Live knowledge graph that tracks your browsing in real-time.
 
-![Weft Extension Demo](https://raw.githubusercontent.com/Avi-141/weft/main/extension-demo.gif)
+![Weft Extension Demo](https://raw.githubusercontent.com/Avi-141/weft/main/extension-demo-compressed.gif)
 
 ### Features
 
