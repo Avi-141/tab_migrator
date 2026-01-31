@@ -8,6 +8,9 @@ let graphData = { tabs: [], edges: [], groups: [] };
 let cy = null; // Cytoscape instance
 let selectedTab = null;
 let searchQuery = "";
+let cachedInsights = null; // { content: string, timestamp: number }
+let searchHistory = []; // Array of recent search queries
+const MAX_SEARCH_HISTORY = 8;
 
 // DOM Elements
 const elements = {
@@ -17,6 +20,10 @@ const elements = {
   graphView: document.getElementById("graph-view"),
   viewGroups: document.getElementById("view-groups"),
   viewGraph: document.getElementById("view-graph"),
+  viewInsights: document.getElementById("view-insights"),
+  insightsView: document.getElementById("insights-view"),
+  insightsContent: document.getElementById("insights-content"),
+  btnFetchInsights: document.getElementById("btn-fetch-insights"),
   detailsPanel: document.getElementById("details-panel"),
   detailsTitle: document.getElementById("details-title"),
   detailsUrl: document.getElementById("details-url"),
@@ -35,7 +42,11 @@ const elements = {
   statsTabs: document.getElementById("stats-tabs"),
   statsGroups: document.getElementById("stats-groups"),
   statsEdges: document.getElementById("stats-edges"),
-  cyContainer: document.getElementById("cy")
+  cyContainer: document.getElementById("cy"),
+  searchHistory: document.getElementById("search-history"),
+  detailsRelated: document.getElementById("details-related"),
+  sessionTimeline: document.getElementById("session-timeline"),
+  timelineChart: document.getElementById("timeline-chart")
 };
 
 // ============ INITIALIZATION ============
@@ -43,6 +54,9 @@ const elements = {
 async function init() {
   // Load graph data
   await loadGraphData();
+
+  // Load search history from storage
+  loadSearchHistory();
 
   // Set up event listeners
   setupEventListeners();
@@ -74,11 +88,36 @@ function setupEventListeners() {
   // View toggle
   elements.viewGroups.addEventListener("click", () => switchView("groups"));
   elements.viewGraph.addEventListener("click", () => switchView("graph"));
+  elements.viewInsights.addEventListener("click", () => switchView("insights"));
+  elements.btnFetchInsights.addEventListener("click", fetchInsights);
 
   // Search
   elements.searchInput.addEventListener("input", (e) => {
     searchQuery = e.target.value;
     applySearch();
+  });
+
+  // Search input focus - show history
+  elements.searchInput.addEventListener("focus", () => {
+    if (searchHistory.length > 0) {
+      renderSearchHistory();
+      elements.searchHistory.classList.remove("hidden");
+    }
+  });
+
+  // Search input blur - hide history (with delay for clicks)
+  elements.searchInput.addEventListener("blur", () => {
+    setTimeout(() => {
+      elements.searchHistory.classList.add("hidden");
+    }, 200);
+  });
+
+  // Search input enter - save to history
+  elements.searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      addToSearchHistory(searchQuery.trim());
+      elements.searchHistory.classList.add("hidden");
+    }
   });
 
   // Details panel
@@ -103,6 +142,15 @@ function setupEventListeners() {
     } else if (e.key === "/" && document.activeElement !== elements.searchInput) {
       e.preventDefault();
       elements.searchInput.focus();
+    } else if (e.key === "i" && document.activeElement !== elements.searchInput) {
+      e.preventDefault();
+      switchView("insights");
+    } else if (e.key === "g" && document.activeElement !== elements.searchInput) {
+      e.preventDefault();
+      switchView("groups");
+    } else if (e.key === "v" && document.activeElement !== elements.searchInput) {
+      e.preventDefault();
+      switchView("graph");
     }
   });
 }
@@ -113,16 +161,210 @@ function switchView(view) {
   if (view === "groups") {
     elements.groupsView.classList.add("active");
     elements.graphView.classList.remove("active");
+    elements.insightsView.classList.remove("active");
     elements.viewGroups.classList.add("active");
     elements.viewGraph.classList.remove("active");
-  } else {
+    elements.viewInsights.classList.remove("active");
+  } else if (view === "graph") {
     elements.groupsView.classList.remove("active");
     elements.graphView.classList.add("active");
+    elements.insightsView.classList.remove("active");
     elements.viewGroups.classList.remove("active");
     elements.viewGraph.classList.add("active");
-    // Re-render graph when switching to graph view
+    elements.viewInsights.classList.remove("active");
     renderGraph();
+  } else if (view === "insights") {
+    elements.groupsView.classList.remove("active");
+    elements.graphView.classList.remove("active");
+    elements.insightsView.classList.add("active");
+    elements.viewGroups.classList.remove("active");
+    elements.viewGraph.classList.remove("active");
+    elements.viewInsights.classList.add("active");
+    // Render session timeline
+    renderSessionTimeline();
+    // Auto-fetch if first time or stale?
+    // For now, let user click refresh or auto fetch
+    fetchInsights();
   }
+}
+
+async function fetchInsights() {
+  const content = elements.insightsContent;
+
+  // Show cached insights with stale indicator if available
+  if (cachedInsights) {
+    const age = Math.round((Date.now() - cachedInsights.timestamp) / 60000);
+    content.innerHTML = `<div class="stale-notice">Last updated ${age} min ago</div>` + cachedInsights.html;
+  } else {
+    content.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  }
+
+  try {
+    // 1. Get current tabs
+    const tabs = await chrome.tabs.query({ currentWindow: true });
+
+    // 2. Sync tabs to server
+    const syncPayload = {
+      tabs: tabs.map(t => ({
+        id: t.id,
+        url: t.url,
+        title: t.title,
+        active: t.active
+      }))
+    };
+
+    const syncResponse = await fetch("http://localhost:8000/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(syncPayload)
+    });
+
+    if (!syncResponse.ok) throw new Error("Sync failed");
+    const syncResult = await syncResponse.json();
+
+    // 3. Render returned insights
+    const html = renderMarkdown(syncResult.insights);
+
+    // Cache the result
+    cachedInsights = { html, timestamp: Date.now() };
+    content.innerHTML = html;
+  } catch (e) {
+    // Fallback to offline insights from local graph data
+    const offlineInsights = generateOfflineInsights();
+    if (offlineInsights) {
+      const html = renderMarkdown(offlineInsights);
+      // Cache the offline result too
+      cachedInsights = { html, timestamp: Date.now() };
+      content.innerHTML = html;
+    } else {
+      content.innerHTML = `
+        <div class="placeholder-text">
+          <p>No browsing data yet.</p>
+          <p class="small-text">Browse some tabs to build your knowledge graph.</p>
+        </div>
+      `;
+    }
+  }
+}
+
+/**
+ * Render markdown to HTML with proper list wrapping.
+ */
+function renderMarkdown(text) {
+  if (!text) return "";
+
+  const lines = text.split("\n");
+  let html = "";
+  let inList = false;
+
+  for (const line of lines) {
+    // Headers
+    if (line.startsWith("# ")) {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += `<h1>${escapeHtml(line.slice(2))}</h1>`;
+    } else if (line.startsWith("## ")) {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += `<h2>${escapeHtml(line.slice(3))}</h2>`;
+    } else if (line.startsWith("### ")) {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += `<h3>${escapeHtml(line.slice(4))}</h3>`;
+    } else if (line.startsWith("- ")) {
+      if (!inList) { html += "<ul>"; inList = true; }
+      html += `<li>${formatInline(line.slice(2))}</li>`;
+    } else if (line.match(/^\d+\.\s/)) {
+      // Numbered list item
+      if (!inList) { html += "<ol>"; inList = true; }
+      html += `<li>${formatInline(line.replace(/^\d+\.\s/, ""))}</li>`;
+    } else {
+      if (inList) { html += "</ul>"; inList = false; }
+      if (line.trim()) {
+        html += `<p>${formatInline(line)}</p>`;
+      }
+    }
+  }
+  if (inList) html += "</ul>";
+
+  return html;
+}
+
+/**
+ * Format inline markdown (bold, code, etc.)
+ */
+function formatInline(text) {
+  return escapeHtml(text)
+    .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
+}
+
+/**
+ * Generate insights from local graph data when server is unavailable.
+ */
+function generateOfflineInsights() {
+  if (!graphData.tabs.length) return null;
+
+  const tabCount = graphData.tabs.filter(t => !t.duplicateOf).length;
+  const groupCount = graphData.groups.length;
+
+  // Get top groups
+  const sortedGroups = [...graphData.groups].sort((a, b) => (b.size || b.tabIds?.length || 0) - (a.size || a.tabIds?.length || 0));
+  const topGroups = sortedGroups.slice(0, 5);
+
+  // Get top keywords
+  const keywordCounts = {};
+  for (const tab of graphData.tabs) {
+    for (const kw of (tab.keywords || [])) {
+      keywordCounts[kw] = (keywordCounts[kw] || 0) + 1;
+    }
+  }
+  const topKeywords = Object.entries(keywordCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([k]) => k);
+
+  // Get top domains
+  const domainCounts = {};
+  for (const tab of graphData.tabs) {
+    if (tab.domain) {
+      domainCounts[tab.domain] = (domainCounts[tab.domain] || 0) + 1;
+    }
+  }
+  const topDomains = Object.entries(domainCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([d]) => d);
+
+  // Build report
+  const lines = [
+    "# Browsing Memory Report",
+    `**Tabs tracked:** ${tabCount} | **Knowledge Clusters:** ${groupCount}`,
+    "",
+    "## Top Research Topics"
+  ];
+
+  if (topGroups.length) {
+    topGroups.forEach((g, i) => {
+      const size = g.size || g.tabIds?.length || 0;
+      lines.push(`${i + 1}. **${g.label}** (${size} items)`);
+    });
+  } else {
+    lines.push("_No clusters found yet._");
+  }
+
+  lines.push("");
+  lines.push("## Key Themes");
+  if (topKeywords.length) {
+    lines.push(topKeywords.map(k => `\`${k}\``).join(", "));
+  } else {
+    lines.push("_Not enough data for themes._");
+  }
+
+  lines.push("");
+  lines.push("## Top Sources");
+  for (const d of topDomains) {
+    lines.push(`- ${d}`);
+  }
+
+  return lines.join("\n");
 }
 
 // ============ GROUPS VIEW ============
@@ -195,8 +437,15 @@ function getTabsForGroup(groupId) {
 }
 
 function getFilteredGroups() {
+  // Sort by size (handling undefined)
+  const sortBySize = (a, b) => {
+    const aSize = a.size || a.tabIds?.length || 0;
+    const bSize = b.size || b.tabIds?.length || 0;
+    return bSize - aSize;
+  };
+
   if (!searchQuery) {
-    return graphData.groups.sort((a, b) => b.size - a.size);
+    return [...graphData.groups].sort(sortBySize);
   }
 
   const query = searchQuery.toLowerCase();
@@ -236,7 +485,7 @@ function getFilteredGroups() {
     }
 
     return true;
-  }).sort((a, b) => b.size - a.size);
+  }).sort(sortBySize);
 }
 
 // ============ GRAPH VIEW ============
@@ -454,9 +703,9 @@ function renderGraph() {
     name: "cose",
     animate: false,
     randomize: true,
-    nodeRepulsion: function(node) { return 6000; },
-    idealEdgeLength: function(edge) { return 120; },
-    edgeElasticity: function(edge) { return 100; },
+    nodeRepulsion: function (node) { return 6000; },
+    idealEdgeLength: function (edge) { return 120; },
+    edgeElasticity: function (edge) { return 100; },
     nestingFactor: 1.2,
     gravity: 0.4,
     numIter: 200,
@@ -542,6 +791,9 @@ function showDetails(tab) {
   const group = graphData.groups.find(g => g.id === tab.groupId);
   elements.detailsGroup.textContent = group ? group.label : "Ungrouped";
 
+  // Related tabs
+  renderRelatedTabs(tab);
+
   elements.detailsPanel.classList.remove("hidden");
 
   // Highlight in graph if visible
@@ -577,6 +829,11 @@ function openSelectedTab() {
 async function refreshGraph() {
   elements.btnRefresh.disabled = true;
   elements.btnRefresh.innerHTML = '<div class="spinner"></div>';
+
+  // Show loading state in groups view
+  if (elements.groupsView.classList.contains("active")) {
+    elements.groupsList.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  }
 
   try {
     const result = await chrome.runtime.sendMessage({ type: "REBUILD_GRAPH" });
@@ -682,6 +939,240 @@ function getFaviconUrl(url) {
   } catch {
     return "";
   }
+}
+
+// ============ SEARCH HISTORY ============
+
+function loadSearchHistory() {
+  try {
+    const stored = localStorage.getItem("weft_search_history");
+    if (stored) {
+      searchHistory = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error("Failed to load search history:", e);
+    searchHistory = [];
+  }
+}
+
+function saveSearchHistory() {
+  try {
+    localStorage.setItem("weft_search_history", JSON.stringify(searchHistory));
+  } catch (e) {
+    console.error("Failed to save search history:", e);
+  }
+}
+
+function addToSearchHistory(query) {
+  // Remove if already exists (to move to front)
+  searchHistory = searchHistory.filter(q => q !== query);
+  // Add to front
+  searchHistory.unshift(query);
+  // Limit size
+  if (searchHistory.length > MAX_SEARCH_HISTORY) {
+    searchHistory = searchHistory.slice(0, MAX_SEARCH_HISTORY);
+  }
+  saveSearchHistory();
+}
+
+function clearSearchHistory() {
+  searchHistory = [];
+  saveSearchHistory();
+  elements.searchHistory.classList.add("hidden");
+}
+
+// Expose to global for onclick handler
+window.clearSearchHistory = clearSearchHistory;
+
+function renderSearchHistory() {
+  if (!searchHistory.length) {
+    elements.searchHistory.classList.add("hidden");
+    return;
+  }
+
+  elements.searchHistory.innerHTML = `
+    <div class="search-history-header">
+      <span>Recent searches</span>
+      <button class="search-history-clear" onclick="clearSearchHistory()">Clear</button>
+    </div>
+    <div class="search-history-items">
+      ${searchHistory.map(q => `
+        <span class="search-history-item" data-query="${escapeHtml(q)}">${escapeHtml(q)}</span>
+      `).join("")}
+    </div>
+  `;
+
+  // Add click handlers
+  elements.searchHistory.querySelectorAll(".search-history-item").forEach(item => {
+    item.addEventListener("click", () => {
+      const query = item.dataset.query;
+      elements.searchInput.value = query;
+      searchQuery = query;
+      applySearch();
+      elements.searchHistory.classList.add("hidden");
+    });
+  });
+}
+
+// ============ RELATED TABS ============
+
+function getRelatedTabs(tabId) {
+  const related = [];
+  const seen = new Set();
+
+  for (const edge of graphData.edges) {
+    let connectedId = null;
+    let reason = edge.reason || "similarity";
+
+    if (edge.source === tabId) {
+      connectedId = edge.target;
+    } else if (edge.target === tabId) {
+      connectedId = edge.source;
+    }
+
+    if (connectedId && !seen.has(connectedId)) {
+      seen.add(connectedId);
+      const tab = graphData.tabs.find(t => t.id === connectedId);
+      if (tab) {
+        related.push({
+          tab,
+          weight: edge.weight || 0,
+          reason
+        });
+      }
+    }
+  }
+
+  // Sort by weight (strongest connections first)
+  related.sort((a, b) => b.weight - a.weight);
+  return related.slice(0, 5); // Top 5 related
+}
+
+function renderRelatedTabs(tab) {
+  const related = getRelatedTabs(tab.id);
+
+  if (!related.length) {
+    elements.detailsRelated.innerHTML = '<span class="no-related-tabs">No connected tabs</span>';
+    return;
+  }
+
+  elements.detailsRelated.innerHTML = related.map(({ tab: relatedTab, reason, weight }) => `
+    <div class="related-tab-item" data-tab-id="${relatedTab.id}">
+      <img class="related-tab-favicon" src="${getFaviconUrl(relatedTab.url)}" alt="" onerror="this.style.display='none'">
+      <div class="related-tab-info">
+        <div class="related-tab-title">${escapeHtml(relatedTab.title || relatedTab.url)}</div>
+        <div class="related-tab-reason ${reason}">
+          ${reason === "navigation" ? "→ Navigated" : `~ ${Math.round(weight * 100)}% similar`}
+        </div>
+      </div>
+    </div>
+  `).join("");
+
+  // Add click handlers
+  elements.detailsRelated.querySelectorAll(".related-tab-item").forEach(item => {
+    item.addEventListener("click", () => {
+      const relatedTabId = item.dataset.tabId;
+      const relatedTab = graphData.tabs.find(t => t.id === relatedTabId);
+      if (relatedTab) {
+        showDetails(relatedTab);
+      }
+    });
+  });
+}
+
+// ============ SESSION TIMELINE ============
+
+function renderSessionTimeline() {
+  if (!graphData.tabs.length) {
+    elements.timelineChart.innerHTML = '<div class="timeline-empty">No activity data yet</div>';
+    return;
+  }
+
+  // Group tabs by time buckets (using addedAt or lastAccessed if available)
+  // Since we may not have timestamps, we'll use domain distribution as a proxy
+  // Or group count distribution
+
+  // Build activity data from groups (clusters)
+  const activityData = [];
+
+  // If tabs have timestamps, use them
+  const tabsWithTime = graphData.tabs.filter(t => t.addedAt || t.lastAccessed);
+
+  if (tabsWithTime.length > 0) {
+    // Group by hour
+    const hourBuckets = {};
+    for (const tab of tabsWithTime) {
+      const time = tab.addedAt || tab.lastAccessed;
+      const date = new Date(time);
+      const hourKey = `${date.getHours()}:00`;
+      hourBuckets[hourKey] = (hourBuckets[hourKey] || 0) + 1;
+    }
+
+    // Create 24-hour timeline
+    for (let h = 0; h < 24; h++) {
+      const key = `${h}:00`;
+      activityData.push({
+        label: key,
+        count: hourBuckets[key] || 0
+      });
+    }
+  } else {
+    // Fallback: show group distribution as activity proxy
+    const sortedGroups = [...graphData.groups].sort((a, b) =>
+      (b.size || b.tabIds?.length || 0) - (a.size || a.tabIds?.length || 0)
+    );
+
+    // Take top groups as "activity buckets"
+    const topGroups = sortedGroups.slice(0, 12);
+    for (const group of topGroups) {
+      activityData.push({
+        label: truncate(group.label, 15),
+        count: group.size || group.tabIds?.length || 0,
+        groupId: group.id
+      });
+    }
+  }
+
+  if (!activityData.length) {
+    elements.timelineChart.innerHTML = '<div class="timeline-empty">No activity data</div>';
+    return;
+  }
+
+  const maxCount = Math.max(...activityData.map(d => d.count), 1);
+
+  elements.timelineChart.innerHTML = `
+    <div class="timeline-chart" style="display: flex; align-items: flex-end; gap: 2px; height: 40px;">
+      ${activityData.map(d => {
+        const height = Math.max(4, (d.count / maxCount) * 100);
+        return `
+          <div class="timeline-bar" style="height: ${height}%;" data-group-id="${d.groupId || ''}">
+            <div class="timeline-bar-tooltip">${escapeHtml(d.label)}: ${d.count} tabs</div>
+          </div>
+        `;
+      }).join("")}
+    </div>
+    <div class="timeline-labels">
+      <span>${escapeHtml(activityData[0]?.label || '')}</span>
+      <span>${escapeHtml(activityData[activityData.length - 1]?.label || '')}</span>
+    </div>
+  `;
+
+  // Add click handlers for group-based timeline
+  elements.timelineChart.querySelectorAll(".timeline-bar[data-group-id]").forEach(bar => {
+    const groupId = bar.dataset.groupId;
+    if (groupId) {
+      bar.addEventListener("click", () => {
+        // Filter to show this group
+        const group = graphData.groups.find(g => g.id === groupId);
+        if (group) {
+          elements.searchInput.value = group.label;
+          searchQuery = group.label;
+          applySearch();
+          switchView("groups");
+        }
+      });
+    }
+  });
 }
 
 // ============ START ============

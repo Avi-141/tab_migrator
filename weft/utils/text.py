@@ -73,6 +73,17 @@ def fallback_summary(text: str, max_sentences: int = 3) -> str:
     """Extract first N sentences as a fallback summary."""
     if not text:
         return ""
-    sentences = re.split(r"(?<=[.!?])\s+", text)
-    sentences = [s.strip() for s in sentences if s.strip()]
+    # Split on sentence-ending punctuation
+    import re
+    raw_sentences = re.split(r'(?<=[.!?])\s+', text)
+    sentences = [s.strip() for s in raw_sentences if s.strip()]
     return " ".join(sentences[:max_sentences])
+
+
+def clean_filename(text: str) -> str:
+    """Sanitize text for use as a filename."""
+    # Remove invalid characters
+    s = re.sub(r'[\\/*?:"<>|]', "", text)
+    # Replace whitespace with space (or leave as is, Obsidian handles spaces)
+    s = s.strip()
+    return s or "untitled"

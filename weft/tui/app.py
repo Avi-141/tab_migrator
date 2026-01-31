@@ -12,7 +12,7 @@ from typing import Dict, List, Optional
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets import Footer, Header, Input, ListItem, ListView, Static
+from textual.widgets import Footer, Header, Input, ListItem, ListView, Static, Markdown
 
 
 def load_graph(path: str) -> Dict:
@@ -131,6 +131,20 @@ class TabGraphApp(App):
         border: heavy #1f3a2e;
         color: #eafff4;
     }
+    #insights_hint {
+        dock: bottom;
+        height: 1;
+        background: #1f3a2e;
+        color: #a0d0b8;
+        text-align: center;
+    }
+    #insights_search {
+        margin: 0 1;
+    }
+    #insights_markdown {
+        padding: 1 2;
+        height: 1fr;
+    }
     """
 
     BINDINGS = [
@@ -144,6 +158,7 @@ class TabGraphApp(App):
         ("{", "prev_tab", "Prev tab"),
         ("}", "next_tab", "Next tab"),
         ("v", "show_graph", "Graph view"),
+        ("i", "show_insights", "Insights"),
     ]
 
     def __init__(self, graph: Dict):
@@ -356,6 +371,67 @@ class TabGraphApp(App):
         for gid in adjacency:
             adjacency[gid].sort(key=lambda t: t[1], reverse=True)
         return adjacency
+
+    def action_show_insights(self) -> None:
+        from weft.describe_graph import generate_insights
+        report = generate_insights(self.graph)
+        self.push_screen(InsightsScreen(report))
+
+
+class InsightsScreen(Screen):
+    """Screen for displaying browsing insights."""
+
+    BINDINGS = [
+        ("escape", "back", "Back"),
+        ("q", "back", "Back"),
+        ("/", "focus_search", "Search"),
+        ("s", "focus_search", "Search"),
+    ]
+
+    def __init__(self, report: str):
+        super().__init__()
+        self.report = report
+        self.filtered_report = report
+
+    def compose(self) -> ComposeResult:
+        yield Header(show_clock=True)
+        with Vertical(classes="pane"):
+            yield Input(placeholder="Filter insights (type to search)...", id="insights_search")
+            yield Markdown(self.report, id="insights_markdown")
+        yield Static("↑↓ Scroll | / Search | q Back", id="insights_hint")
+        yield Footer()
+
+    async def on_input_changed(self, event: Input.Changed) -> None:
+        if event.input.id != "insights_search":
+            return
+        query = event.value.strip().lower()
+        if not query:
+            self.filtered_report = self.report
+        else:
+            # Filter report lines that contain the query
+            lines = self.report.split("\n")
+            filtered_lines = []
+            include_next = False
+            for line in lines:
+                # Always include headers
+                if line.startswith("#"):
+                    filtered_lines.append(line)
+                    include_next = True
+                elif query in line.lower():
+                    filtered_lines.append(line)
+                    include_next = False
+                elif include_next and line.strip():
+                    # Include first line after header
+                    filtered_lines.append(line)
+                    include_next = False
+            self.filtered_report = "\n".join(filtered_lines) if filtered_lines else f"No matches for '{query}'"
+        self.query_one("#insights_markdown", Markdown).update(self.filtered_report)
+
+    def action_focus_search(self) -> None:
+        self.query_one("#insights_search", Input).focus()
+
+    def action_back(self) -> None:
+        self.app.pop_screen()
 
 
 class GraphScreen(Screen):

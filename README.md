@@ -32,6 +32,8 @@ Live knowledge graph that tracks your browsing in real-time.
 - **Keyword Extraction** - Automatic keyword detection from page content
 - **Search** - Fuzzy text, `#keyword`, and `@domain` filters
 - **Import/Export** - Compatible with CLI JSON format
+- **Daily Insights** - View personalized reports on your browsing habits (requires server)
+- **Real-time Sync** - Send live tabs to local server for instant analysis
 
 ### Install Extension
 
@@ -46,6 +48,7 @@ Live knowledge graph that tracks your browsing in real-time.
 **Views:**
 - **Groups** - Browse tabs organized by topic clusters
 - **Graph** - Visual knowledge graph with similarity and navigation edges
+- **Insights** - View summary of top research topics and key themes
 
 **Search Syntax:**
 - Fuzzy: `distributed systems`
@@ -57,6 +60,7 @@ Live knowledge graph that tracks your browsing in real-time.
 - Click "Open Tab" to open in browser
 - Use refresh button to rebuild graph after browsing
 - Export/Import for backup or CLI compatibility
+- **Click "Refresh Insights"** to sync live tabs and generate report
 
 ---
 
@@ -86,8 +90,11 @@ pip install -e .
 # Build knowledge graph from your browser tabs
 weft weave
 
-# Explore in terminal UI
+# Explore in terminal UI (press 'i' for insights)
 weft explore
+
+# Run the API/MCP server
+weft serve
 ```
 
 ### Commands
@@ -125,6 +132,43 @@ weft explore
 weft explore my_graph.json
 ```
 
+#### `weft insights`
+
+Print a markdown report of your browsing habits, top topics, and key themes.
+
+```bash
+weft insights
+```
+
+#### `weft serve`
+
+Run the Weft API and MCP server. This enables:
+- **Real-time Insights** in the browser extension
+- **Claude Desktop** integration (MCP)
+
+```bash
+weft serve
+# Server runs at http://localhost:8000
+```
+
+#### `weft install-mcp` (macOS)
+
+Automatically configure Claude Desktop to talk to Weft.
+
+```bash
+weft install-mcp
+```
+Once installed, ask Claude: *"Summarize my research on Python async libraries."*
+
+#### `weft export-obsidian`
+
+Export your knowledge clusters as markdown files to your Obsidian vault.
+
+```bash
+weft export-obsidian "/Users/you/Documents/MyVault"
+```
+Creates a `Weft Browsing` folder with tagged and linked notes for each cluster.
+
 #### Keyboard Shortcuts
 
 | Key | Action |
@@ -134,6 +178,7 @@ weft explore my_graph.json
 | `o` | Open tab in browser |
 | `g` | Open all tabs in group |
 | `v` | Switch to graph view |
+| `i` | Switch to insights view |
 | `s` | Focus search |
 | `q` | Quit |
 

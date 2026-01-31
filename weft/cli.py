@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import platform
 import sys
 
 from weft import __version__
@@ -118,6 +119,98 @@ def cmd_explore(args):
     graph = load_graph(args.graph_json)
     app = TabGraphApp(graph)
     app.run()
+
+
+def cmd_insights(args):
+    """Print browsing insights."""
+    from weft.describe_graph import generate_insights, load_graph
+    from rich.console import Console
+    from rich.markdown import Markdown
+
+    if not os.path.exists(args.graph_json):
+        print(f"[ERROR] Graph file not found: {args.graph_json}", file=sys.stderr)
+        print("Run 'weft weave' first to generate the graph.", file=sys.stderr)
+        sys.exit(1)
+
+    graph = load_graph(args.graph_json)
+    report = generate_insights(graph, use_emoji=not args.no_emoji)
+
+    console = Console()
+    console.print(Markdown(report))
+
+
+def cmd_serve(args):
+    """Run the Web/MCP server."""
+    import uvicorn
+
+    if args.graph_json:
+        os.environ["WEFT_GRAPH_PATH"] = args.graph_json
+
+    os.environ["WEFT_SERVER_PORT"] = str(args.port)
+
+    print(f"[INFO] Starting Weft Server on http://0.0.0.0:{args.port}...", file=sys.stderr)
+    uvicorn.run("weft.server:app", host="0.0.0.0", port=args.port, reload=False)
+
+
+def cmd_install_mcp(args):
+    """Install MCP server config for Claude Desktop."""
+    import shutil
+    
+    if platform.system() != "Darwin":
+        print("[ERROR] Automatic installation is only supported on macOS for now.", file=sys.stderr)
+        return
+
+    config_path = os.path.expanduser("~/Library/Application Support/Claude/claude_desktop_config.json")
+    
+    # Check if config exists
+    if os.path.exists(config_path):
+        try:
+            with open(config_path, "r") as f:
+                config = json.load(f)
+        except Exception:
+            config = {}
+    else:
+        config = {}
+        
+    mcp_servers = config.get("mcpServers", {})
+    
+    # Add weft server
+    python_path = sys.executable
+    mcp_servers["weft"] = {
+        "command": python_path,
+        "args": ["-m", "weft", "serve"],
+        "env": {
+            "WEFT_GRAPH_PATH": os.path.abspath(args.graph_json)
+        }
+    }
+    
+    config["mcpServers"] = mcp_servers
+    
+    # Write back
+    os.makedirs(os.path.dirname(config_path), exist_ok=True)
+    with open(config_path, "w") as f:
+        json.dump(config, f, indent=2)
+        
+    print(f"[OK] Installed Weft MCP server to {config_path}")
+    print("Please restart Claude Desktop to enable it.")
+
+
+def cmd_export_obsidian(args):
+    """Export graph to Obsidian vault."""
+    from weft.export.obsidian import export_to_obsidian
+    from weft.describe_graph import load_graph
+    
+    if not os.path.exists(args.graph_json):
+        print(f"[ERROR] Graph file not found: {args.graph_json}", file=sys.stderr)
+        return
+
+    graph = load_graph(args.graph_json)
+    print(f"Exporting to Obsidian vault at {args.vault_path}...")
+    try:
+        export_to_obsidian(graph, args.vault_path)
+        print("[OK] Export complete.")
+    except Exception as e:
+        print(f"[ERROR] Export failed: {e}", file=sys.stderr)
 
 
 def main():
@@ -355,6 +448,70 @@ def main():
         help="Path to graph JSON file (default: weft_graph.json)",
     )
 
+    # Insights command
+    insights_parser = subparsers.add_parser(
+        "insights",
+        help="Generate browsing insights report",
+        description="Generate a markdown report of your browsing habits and key topics.",
+    )
+    insights_parser.add_argument(
+        "graph_json",
+        nargs="?",
+        default="weft_graph.json",
+        help="Path to graph JSON file",
+    )
+    insights_parser.add_argument(
+        "--no-emoji",
+        action="store_true",
+        help="Disable emoji in report (for terminals that don't support them)",
+    )
+
+    # Serve command
+    serve_parser = subparsers.add_parser(
+        "serve",
+        help="Run MCP server",
+        description="Run the Model Context Protocol (MCP) server to expose knowledge to agents.",
+    )
+    serve_parser.add_argument(
+        "--graph-json",
+        default="weft_graph.json",
+        help="Path to graph JSON file",
+    )
+    serve_parser.add_argument(
+        "--port",
+        type=int,
+        default=8000,
+        help="Port to run the server on (default: 8000)",
+    )
+
+    # Install MCP command
+    install_parser = subparsers.add_parser(
+        "install-mcp",
+        help="Install MCP config for Claude Desktop",
+        description="Automatically configure Claude Desktop to use Weft MCP server.",
+    )
+    install_parser.add_argument(
+        "--graph-json",
+        default="weft_graph.json",
+        help="Path to graph JSON file to use in server",
+    )
+
+    # Export Obsidian command
+    obsidian_parser = subparsers.add_parser(
+        "export-obsidian",
+        help="Export graph to Obsidian vault",
+        description="Export knowledge clusters as markdown files to an Obsidian vault.",
+    )
+    obsidian_parser.add_argument(
+        "vault_path",
+        help="Path to Obsidian vault root",
+    )
+    obsidian_parser.add_argument(
+        "--graph-json",
+        default="weft_graph.json",
+        help="Path to graph JSON file",
+    )
+
     # Parse and dispatch
     args = parser.parse_args()
 
@@ -366,6 +523,14 @@ def main():
         cmd_weave(args)
     elif args.command == "explore":
         cmd_explore(args)
+    elif args.command == "insights":
+        cmd_insights(args)
+    elif args.command == "serve":
+        cmd_serve(args)
+    elif args.command == "install-mcp":
+        cmd_install_mcp(args)
+    elif args.command == "export-obsidian":
+        cmd_export_obsidian(args)
 
 
 if __name__ == "__main__":

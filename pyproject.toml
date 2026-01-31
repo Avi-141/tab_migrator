@@ -32,6 +32,9 @@ dependencies = [
     "trafilatura",
     "rich",
     "textual",
+    "fastmcp",
+    "uvicorn",
+    "fastapi",
 ]
 
 [project.optional-dependencies]
