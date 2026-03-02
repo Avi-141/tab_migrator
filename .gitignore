@@ -4,3 +4,6 @@ __pycache__/
 .DS_Store
 data/
 *.egg-info/
+dist/
+build/
+weft_graph*.json
