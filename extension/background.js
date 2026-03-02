@@ -20,20 +20,24 @@ import {
   saveGroups,
   clearEdges,
   clearGroups,
+  clearAll,
   getGraphData
 } from "./lib/storage.js";
 
-// Track per-tab navigation sessions to avoid duplicate edges
-// Key: chromeTabId, Value: { visitedUrls: Set, lastUrl: string }
 const tabSessions = new Map();
+let rebuildTimer = null;
+const REBUILD_DEBOUNCE_MS = 15000;
+
 import {
   buildSimilarityMatrix,
   buildEdges,
   buildNavigationEdges,
   buildGroups,
+  buildGroupsLouvain,
   dedupeTabs,
   computeIdf,
   labelGroup,
+  pagerankScores,
   DEFAULT_OPTIONS
 } from "./lib/clustering.js";
 
@@ -233,17 +237,52 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
  * Handle tab closure.
  */
 chrome.tabs.onRemoved.addListener(async (tabId) => {
-  // Clean up tab session
   tabSessions.delete(tabId);
 
   const existingTab = await getTabByChromeId(tabId);
   if (existingTab) {
     existingTab.closedAt = Date.now();
-    existingTab.chromeTabId = null; // Clear chrome ID since tab is closed
+    existingTab.chromeTabId = null;
     await saveTab(existingTab);
     console.log("[Weft] Tab closed:", existingTab.id);
+    scheduleAutoRebuild();
   }
 });
+
+/**
+ * Track tab activation to record lastAccessed timestamps.
+ */
+chrome.tabs.onActivated.addListener(async (activeInfo) => {
+  try {
+    const tab = await chrome.tabs.get(activeInfo.tabId);
+    if (!tab || !tab.url || !isHttpUrl(tab.url)) return;
+
+    const existingTab = await getTabByChromeId(activeInfo.tabId);
+    if (existingTab) {
+      existingTab.lastAccessed = Date.now();
+      await saveTab(existingTab);
+    }
+  } catch (e) {
+    // Tab may not exist
+  }
+});
+
+/**
+ * Schedule an auto-rebuild with debounce.
+ */
+function scheduleAutoRebuild() {
+  if (rebuildTimer) clearTimeout(rebuildTimer);
+  rebuildTimer = setTimeout(async () => {
+    rebuildTimer = null;
+    try {
+      const { weft_auto_rebuild } = await chrome.storage.local.get("weft_auto_rebuild");
+      if (weft_auto_rebuild === false) return;
+    } catch (e) { /* default to enabled */ }
+
+    console.log("[Weft] Auto-rebuilding graph...");
+    await rebuildGraph();
+  }, REBUILD_DEBOUNCE_MS);
+}
 
 // ============ NAVIGATION TRACKING ============
 
@@ -343,12 +382,14 @@ chrome.webNavigation.onCommitted.addListener(async (details) => {
  */
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "CONTENT_EXTRACTED") {
-    handleContentExtracted(sender.tab?.id, message.data);
+    handleContentExtracted(sender.tab?.id, message.data).then(() => {
+      scheduleAutoRebuild();
+    });
     sendResponse({ success: true });
     return false;
   } else if (message.type === "REBUILD_GRAPH") {
     rebuildGraph().then((result) => sendResponse(result)).catch(e => sendResponse({ success: false, error: e.message }));
-    return true; // Keep channel open for async response
+    return true;
   } else if (message.type === "GET_GRAPH_DATA") {
     getSerializableGraphData().then((data) => sendResponse(data)).catch(e => sendResponse({ tabs: [], edges: [], groups: [] }));
     return true;
@@ -357,6 +398,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   } else if (message.type === "EXPORT_GRAPH") {
     exportGraph().then((data) => sendResponse(data)).catch(e => sendResponse(null));
+    return true;
+  } else if (message.type === "CLEAR_ALL") {
+    clearAll().then(() => sendResponse({ success: true })).catch(e => sendResponse({ success: false, error: e.message }));
     return true;
   }
   return false;
@@ -453,17 +497,28 @@ async function rebuildGraph() {
   }
   const allEdges = Array.from(edgeMap.values());
 
-  // Build groups
-  const { groups, tabToGroup } = buildGroups(primaryTabs, matrix, DEFAULT_OPTIONS);
+  // Build groups using Louvain community detection
+  const { groups, tabToGroup, modularity } = buildGroupsLouvain(primaryTabs, matrix, {
+    edgeThreshold: DEFAULT_OPTIONS.edgeThreshold,
+    resolution: 1.0
+  });
+
+  // Compute PageRank for node importance
+  const prScores = pagerankScores(primaryTabs.length, matrix, DEFAULT_OPTIONS.edgeThreshold);
+  const prById = new Map();
+  for (let i = 0; i < primaryTabs.length; i++) {
+    prById.set(primaryTabs[i].id, prScores[i] || 0);
+    primaryTabs[i].pagerank = Math.round((prScores[i] || 0) * 1000000) / 1000000;
+  }
 
   // Compute IDF for labeling
   const docs = primaryTabs.map(t => t.keywords || []);
   const idf = computeIdf(docs);
 
-  // Label groups
+  // Label groups using PageRank-weighted keywords
   for (const group of groups) {
     const groupTabs = group.tabIds.map(id => tabs.find(t => t.id === id)).filter(Boolean);
-    group.label = labelGroup(groupTabs, idf);
+    group.label = labelGroup(groupTabs, idf, prById);
   }
 
   // Update tab group assignments
@@ -488,7 +543,9 @@ async function rebuildGraph() {
     groups: groups.length,
     edges: allEdges.length,
     navigationEdges: navEdges.length,
-    similarityEdges: similarityEdges.length
+    similarityEdges: similarityEdges.length,
+    modularity: Math.round(modularity * 10000) / 10000,
+    clustering: "louvain"
   };
 
   console.log("[Weft] Graph rebuilt:", stats);

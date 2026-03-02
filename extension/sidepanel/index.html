@@ -14,9 +14,12 @@
   <div class="container">
     <!-- Header -->
     <header class="header">
-      <h1 class="logo">Weft</h1>
+      <div class="header-left">
+        <h1 class="logo">Weft</h1>
+        <span id="connection-status" class="connection-dot offline" title="Server: offline"></span>
+      </div>
       <div class="header-actions">
-        <button id="btn-refresh" class="btn btn-icon" title="Rebuild Graph">
+        <button id="btn-refresh" class="btn btn-icon" title="Rebuild Graph (r)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M23 4v6h-6M1 20v-6h6" />
             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
@@ -36,27 +39,32 @@
             <line x1="12" y1="3" x2="12" y2="15" />
           </svg>
         </button>
+        <button id="btn-settings" class="btn btn-icon" title="Settings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+        </button>
       </div>
     </header>
 
     <!-- Search -->
     <div class="search-container">
-      <input type="text" id="search-input" class="search-input" placeholder="Search: fuzzy text, #keyword, @domain">
+      <input type="text" id="search-input" class="search-input" placeholder="Search tabs... (/ to focus)">
       <div class="search-hint">
-        <span class="hint-item">fuzzy text</span>
+        <span class="hint-item">text</span>
         <span class="hint-item">#keyword</span>
         <span class="hint-item">@domain</span>
       </div>
       <div id="search-history" class="search-history hidden">
-        <!-- Recent searches will be populated here -->
       </div>
     </div>
 
     <!-- View Toggle -->
     <div class="view-toggle">
-      <button id="view-groups" class="toggle-btn active">Groups</button>
-      <button id="view-graph" class="toggle-btn">Graph</button>
-      <button id="view-insights" class="toggle-btn">Insights</button>
+      <button id="view-groups" class="toggle-btn active" title="Groups (g)">Groups</button>
+      <button id="view-graph" class="toggle-btn" title="Graph (v)">Graph</button>
+      <button id="view-insights" class="toggle-btn" title="Insights (i)">Insights</button>
     </div>
 
     <!-- Main Content Area -->
@@ -64,7 +72,6 @@
       <!-- Groups View -->
       <div id="groups-view" class="view active">
         <div class="groups-list" id="groups-list">
-          <!-- Groups will be populated here -->
         </div>
       </div>
 
@@ -109,14 +116,53 @@
             <span class="timeline-title">Session Activity</span>
           </div>
           <div class="timeline-chart" id="timeline-chart">
-            <!-- Timeline bars will be populated here -->
           </div>
         </div>
         <div class="insights-content" id="insights-content">
           <div class="placeholder-text">
-            <p>Connect to the Weft Analyzer to see insights.</p>
-            <p class="small-text">Make sure <code>weft serve</code> is running.</p>
-            <p class="small-text">Or browse some tabs for offline insights.</p>
+            <p>Connect to the Weft server for richer insights.</p>
+            <p class="small-text">Run <code>weft serve</code> or browse tabs for offline insights.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings View -->
+      <div id="settings-view" class="view">
+        <div class="settings-panel">
+          <h2 class="settings-title">Settings</h2>
+          <div class="setting-group">
+            <label class="setting-label">Server URL</label>
+            <input type="text" id="setting-server-url" class="setting-input" placeholder="http://localhost:8000">
+            <span class="setting-hint">URL for the Weft analysis server</span>
+          </div>
+          <div class="setting-group">
+            <label class="setting-label">Auto-rebuild</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="setting-auto-rebuild" checked>
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="setting-hint">Automatically rebuild graph when tabs change</span>
+          </div>
+          <div class="setting-group">
+            <label class="setting-label">Stale threshold (hours)</label>
+            <input type="number" id="setting-stale-hours" class="setting-input setting-input-small" value="24" min="1" max="168">
+            <span class="setting-hint">Mark tabs as stale after this many hours</span>
+          </div>
+          <div class="settings-actions">
+            <button id="btn-save-settings" class="btn btn-primary">Save</button>
+            <button id="btn-clear-data" class="btn btn-danger">Clear All Data</button>
+          </div>
+          <div class="settings-shortcuts">
+            <h3>Keyboard Shortcuts</h3>
+            <div class="shortcut-row"><kbd>/</kbd> Focus search</div>
+            <div class="shortcut-row"><kbd>g</kbd> Groups view</div>
+            <div class="shortcut-row"><kbd>v</kbd> Graph view</div>
+            <div class="shortcut-row"><kbd>i</kbd> Insights view</div>
+            <div class="shortcut-row"><kbd>r</kbd> Rebuild graph</div>
+            <div class="shortcut-row"><kbd>j</kbd> / <kbd>k</kbd> Navigate groups</div>
+            <div class="shortcut-row"><kbd>Enter</kbd> Expand group</div>
+            <div class="shortcut-row"><kbd>o</kbd> Open selected tab</div>
+            <div class="shortcut-row"><kbd>Esc</kbd> Close panel</div>
           </div>
         </div>
       </div>
@@ -160,11 +206,23 @@
       </div>
     </div>
 
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
     <!-- Stats Footer -->
     <footer class="footer">
-      <span id="stats-tabs">0 tabs</span>
-      <span id="stats-groups">0 groups</span>
-      <span id="stats-edges">0 edges</span>
+      <span id="stats-tabs" class="footer-stat">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+        <span>0 tabs</span>
+      </span>
+      <span id="stats-groups" class="footer-stat">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>0 groups</span>
+      </span>
+      <span id="stats-edges" class="footer-stat">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>0 edges</span>
+      </span>
     </footer>
   </div>
 

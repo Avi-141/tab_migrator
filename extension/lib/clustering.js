@@ -70,7 +70,7 @@ export function cosineSimilarity(a, b) {
 }
 
 /**
- * Compute similarity score between two tabs.
+ * Compute similarity score between two tabs, clamped to [0, 1].
  * Uses embeddings if available, falls back to keyword Jaccard.
  * @param {Object} tabA - First tab
  * @param {Object} tabB - Second tab
@@ -78,20 +78,17 @@ export function cosineSimilarity(a, b) {
  * @returns {number} - Similarity score
  */
 export function similarityScore(tabA, tabB, domainBonus = DEFAULT_OPTIONS.domainBonus) {
-  // Try embeddings first
   let similarity = cosineSimilarity(tabA.embedding, tabB.embedding);
 
-  // Fallback to keyword Jaccard
   if (similarity === 0) {
     similarity = jaccard(tabA.keywords || [], tabB.keywords || []);
   }
 
-  // Domain bonus
   if (tabA.domain && tabA.domain === tabB.domain) {
     similarity += domainBonus;
   }
 
-  return similarity;
+  return Math.min(similarity, 1.0);
 }
 
 /**
@@ -410,10 +407,10 @@ export function topTfidfTerms(tokens, idf, maxTerms = 3) {
  * Generate a label for a group of tabs.
  * @param {Object[]} groupTabs - Tabs in the group
  * @param {Map<string, number>} idf - IDF mapping
+ * @param {Map<string, number>} [prById] - Optional PageRank scores by tab id
  * @returns {string} - Group label
  */
-export function labelGroup(groupTabs, idf) {
-  // Check for domain majority
+export function labelGroup(groupTabs, idf, prById) {
   const domains = groupTabs.map(t => t.domain).filter(Boolean);
   if (domains.length > 0) {
     const counts = new Map();
@@ -428,7 +425,10 @@ export function labelGroup(groupTabs, idf) {
     }
   }
 
-  // Fall back to TF-IDF keywords
+  if (prById && prById.size > 0) {
+    return labelGroupRanked(groupTabs, idf, prById);
+  }
+
   const allTokens = [];
   for (const tab of groupTabs) {
     if (tab.keywords) {
@@ -438,4 +438,228 @@ export function labelGroup(groupTabs, idf) {
 
   const topTerms = topTfidfTerms(allTokens, idf, 3);
   return topTerms.length > 0 ? topTerms.join(" / ") : "group";
+}
+
+/**
+ * PageRank-weighted label generation.
+ * @param {Object[]} groupTabs - Tabs in the group
+ * @param {Map<string, number>} idf - IDF mapping
+ * @param {Map<string, number>} prById - PageRank scores by tab id
+ * @returns {string} - Group label
+ */
+function labelGroupRanked(groupTabs, idf, prById) {
+  const scored = new Map();
+  for (const tab of groupTabs) {
+    const weight = (prById.get(tab.id) || 0) + 0.01;
+    for (const kw of (tab.keywords || [])) {
+      const tfidf = idf.get(kw) || 0;
+      scored.set(kw, (scored.get(kw) || 0) + tfidf * weight);
+    }
+  }
+
+  const top = Array.from(scored.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3);
+
+  return top.length > 0 ? top.map(t => t[0]).join(" / ") : "group";
+}
+
+
+// ============ LOUVAIN COMMUNITY DETECTION ============
+
+/**
+ * Louvain community detection on a similarity matrix (phase 1 only).
+ *
+ * TODO: Implement phase 2 (community contraction into super-nodes + repeat).
+ * Phase 1 alone is sufficient for tab-scale graphs (50-500 nodes), but phase 2
+ * would improve results on 1000+ node graphs by discovering hierarchical structure.
+ *
+ * @param {number} n - Number of nodes
+ * @param {number[][]} matrix - Similarity matrix
+ * @param {number} edgeThreshold - Minimum edge weight
+ * @param {number} [resolution=1.0] - Resolution parameter (>1 = smaller clusters)
+ * @returns {{ community: Map<number, number>, modularity: number }}
+ */
+export function louvain(n, matrix, edgeThreshold, resolution = 1.0) {
+  if (n === 0) return { community: new Map(), modularity: 0 };
+
+  const adj = new Map();
+  for (let i = 0; i < n; i++) adj.set(i, new Map());
+
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const w = matrix[i][j];
+      if (w >= edgeThreshold) {
+        adj.get(i).set(j, w);
+        adj.get(j).set(i, w);
+      }
+    }
+  }
+
+  const k = new Float64Array(n);
+  for (let i = 0; i < n; i++) {
+    for (const [, w] of adj.get(i)) k[i] += w;
+  }
+
+  let m2 = 0;
+  for (let i = 0; i < n; i++) m2 += k[i];
+  if (m2 === 0) {
+    const c = new Map();
+    for (let i = 0; i < n; i++) c.set(i, i);
+    return { community: c, modularity: 0 };
+  }
+
+  const community = new Int32Array(n);
+  for (let i = 0; i < n; i++) community[i] = i;
+
+  const sigmaIn = new Float64Array(n);
+  const sigmaTot = new Float64Array(n);
+  for (let i = 0; i < n; i++) sigmaTot[i] = k[i];
+
+  let improved = true;
+  while (improved) {
+    improved = false;
+    for (let i = 0; i < n; i++) {
+      const ci = community[i];
+
+      const neighborWeights = new Map();
+      for (const [j, w] of adj.get(i)) {
+        const cj = community[j];
+        neighborWeights.set(cj, (neighborWeights.get(cj) || 0) + w);
+      }
+
+      sigmaIn[ci] -= 2.0 * (neighborWeights.get(ci) || 0);
+      sigmaTot[ci] -= k[i];
+
+      let bestCommunity = ci;
+      let bestGain = 0;
+
+      for (const [c, wIc] of neighborWeights) {
+        const gain = 2.0 * wIc - resolution * sigmaTot[c] * k[i] / m2;
+        if (gain > bestGain) {
+          bestGain = gain;
+          bestCommunity = c;
+        }
+      }
+
+      community[i] = bestCommunity;
+      sigmaIn[bestCommunity] += 2.0 * (neighborWeights.get(bestCommunity) || 0);
+      sigmaTot[bestCommunity] += k[i];
+
+      if (bestCommunity !== ci) improved = true;
+    }
+  }
+
+  const unique = [...new Set(community)].sort((a, b) => a - b);
+  const remap = new Map();
+  unique.forEach((old, idx) => remap.set(old, idx));
+
+  const result = new Map();
+  for (let i = 0; i < n; i++) result.set(i, remap.get(community[i]));
+
+  let q = 0;
+  for (let i = 0; i < n; i++) {
+    for (const [j, w] of adj.get(i)) {
+      if (result.get(i) === result.get(j)) {
+        q += w - (k[i] * k[j]) / m2;
+      }
+    }
+  }
+  q /= m2;
+
+  return { community: result, modularity: q };
+}
+
+/**
+ * Build groups using Louvain community detection.
+ * @param {Object[]} tabs - Array of tab objects
+ * @param {number[][]} matrix - Similarity matrix
+ * @param {Object} options - { edgeThreshold, resolution }
+ * @returns {{ groups: Object[], tabToGroup: Map, modularity: number }}
+ */
+export function buildGroupsLouvain(tabs, matrix, options = {}) {
+  const n = tabs.length;
+  if (n === 0) return { groups: [], tabToGroup: new Map(), modularity: 0 };
+
+  const threshold = options.edgeThreshold || DEFAULT_OPTIONS.edgeThreshold;
+  const resolution = options.resolution || 1.0;
+
+  const { community, modularity } = louvain(n, matrix, threshold, resolution);
+
+  const groupsMap = new Map();
+  for (const [idx, cid] of community) {
+    if (!groupsMap.has(cid)) groupsMap.set(cid, []);
+    groupsMap.get(cid).push(idx);
+  }
+
+  const groups = [];
+  const tabToGroup = new Map();
+  let gid = 0;
+
+  for (const [, indices] of [...groupsMap.entries()].sort((a, b) => a[0] - b[0])) {
+    const tabIds = indices.map(i => tabs[i].id);
+    groups.push({ id: `group_${gid}`, tabIds, size: tabIds.length });
+    for (const tabId of tabIds) tabToGroup.set(tabId, `group_${gid}`);
+    gid++;
+  }
+
+  return { groups, tabToGroup, modularity };
+}
+
+
+// ============ PAGERANK ============
+
+/**
+ * Compute PageRank scores for nodes in a weighted graph.
+ * @param {number} n - Number of nodes
+ * @param {number[][]} matrix - Similarity matrix
+ * @param {number} [edgeThreshold=0.1] - Minimum edge weight
+ * @param {number} [damping=0.85] - Damping factor
+ * @param {number} [maxIter=100] - Maximum iterations
+ * @returns {Float64Array} - PageRank scores (sum to ~1.0)
+ */
+export function pagerankScores(n, matrix, edgeThreshold = 0.1, damping = 0.85, maxIter = 100) {
+  if (n === 0) return new Float64Array(0);
+
+  const outWeight = new Float64Array(n);
+  const adjIn = new Array(n);
+  for (let i = 0; i < n; i++) adjIn[i] = [];
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      if (i !== j && matrix[i][j] >= edgeThreshold) {
+        const w = matrix[i][j];
+        adjIn[j].push([i, w]);
+        outWeight[i] += w;
+      }
+    }
+  }
+
+  let rank = new Float64Array(n).fill(1.0 / n);
+  const base = (1.0 - damping) / n;
+  const tol = 1e-6;
+
+  for (let iter = 0; iter < maxIter; iter++) {
+    const newRank = new Float64Array(n).fill(base);
+    let danglingSum = 0;
+    for (let i = 0; i < n; i++) {
+      if (outWeight[i] === 0) danglingSum += rank[i];
+    }
+    const danglingContrib = damping * danglingSum / n;
+
+    for (let j = 0; j < n; j++) {
+      let s = 0;
+      for (const [i, w] of adjIn[j]) {
+        if (outWeight[i] > 0) s += rank[i] * w / outWeight[i];
+      }
+      newRank[j] += damping * s + danglingContrib;
+    }
+
+    let diff = 0;
+    for (let i = 0; i < n; i++) diff += Math.abs(newRank[i] - rank[i]);
+    rank = newRank;
+    if (diff < tol) break;
+  }
+
+  return rank;
 }
