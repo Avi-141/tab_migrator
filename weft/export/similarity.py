@@ -1,7 +1,7 @@
-"""Similarity computation, deduplication, and clustering functions."""
+"""Similarity computation, deduplication, clustering (Louvain), and PageRank."""
 
 import math
-from collections import Counter
+from collections import Counter, defaultdict
 from typing import Dict, List, Optional, Tuple
 
 from weft.utils.text import hamming_distance, jaccard, tokenize
@@ -23,13 +23,13 @@ def cosine_similarity(a: Optional[List[float]], b: Optional[List[float]]) -> flo
 
 
 def similarity_score(ta: Dict, tb: Dict, domain_bonus: float) -> float:
-    """Compute similarity score between two tabs."""
+    """Compute similarity score between two tabs, clamped to [0, 1]."""
     similarity = cosine_similarity(ta.get("embedding"), tb.get("embedding"))
     if similarity == 0.0:
         similarity = jaccard(ta.get("keywords", []), tb.get("keywords", []))
     if ta.get("domain") and ta.get("domain") == tb.get("domain"):
         similarity += domain_bonus
-    return similarity
+    return min(similarity, 1.0)
 
 
 def build_similarity_matrix(tabs: List[Dict], domain_bonus: float) -> List[List[float]]:
@@ -69,6 +69,208 @@ def build_edges(
     return edges
 
 
+# ============ LOUVAIN COMMUNITY DETECTION ============
+
+
+def _build_adjacency(n: int, matrix: List[List[float]], threshold: float) -> Dict[int, Dict[int, float]]:
+    """Build sparse adjacency from the similarity matrix, keeping only edges >= threshold."""
+    adj: Dict[int, Dict[int, float]] = defaultdict(dict)
+    for i in range(n):
+        for j in range(i + 1, n):
+            w = matrix[i][j]
+            if w >= threshold:
+                adj[i][j] = w
+                adj[j][i] = w
+    return adj
+
+
+def _modularity(communities: Dict[int, int], adj: Dict[int, Dict[int, float]], m2: float) -> float:
+    """Compute modularity Q for a given partition.
+
+    Q = (1/2m) * sum_ij [ A_ij - (k_i * k_j) / 2m ] * delta(c_i, c_j)
+    """
+    if m2 == 0:
+        return 0.0
+
+    k: Dict[int, float] = defaultdict(float)
+    for i in adj:
+        for j, w in adj[i].items():
+            k[i] += w
+
+    q = 0.0
+    for i in adj:
+        for j, w in adj[i].items():
+            if communities[i] == communities[j]:
+                q += w - (k[i] * k[j]) / m2
+    return q / m2
+
+
+def louvain(
+    n: int,
+    matrix: List[List[float]],
+    edge_threshold: float,
+    resolution: float = 1.0,
+) -> Tuple[Dict[int, int], float]:
+    """Louvain community detection on a similarity matrix (phase 1 only).
+
+    Returns a mapping of node index -> community id and the modularity score.
+
+    The resolution parameter controls granularity: >1.0 finds smaller communities,
+    <1.0 finds larger ones.
+
+    TODO: Implement phase 2 (community contraction into super-nodes + repeat).
+    Phase 1 alone is sufficient for tab-scale graphs (50-500 nodes), but phase 2
+    would improve results on 1000+ node graphs by discovering hierarchical structure.
+    """
+    adj = _build_adjacency(n, matrix, edge_threshold)
+
+    k: Dict[int, float] = defaultdict(float)
+    for i in range(n):
+        for j, w in adj.get(i, {}).items():
+            k[i] += w
+
+    m2 = sum(k.values())
+    if m2 == 0:
+        return {i: i for i in range(n)}, 0.0
+
+    community = {i: i for i in range(n)}
+
+    # Sum of weights inside each community
+    sigma_in: Dict[int, float] = defaultdict(float)
+    # Sum of weights incident to each community (including external)
+    sigma_tot: Dict[int, float] = defaultdict(float)
+    for i in range(n):
+        sigma_tot[i] = k[i]
+
+    improved = True
+    while improved:
+        improved = False
+        for i in range(n):
+            ci = community[i]
+
+            # Compute weights to neighboring communities
+            neighbor_weights: Dict[int, float] = defaultdict(float)
+            for j, w in adj.get(i, {}).items():
+                neighbor_weights[community[j]] += w
+
+            # Remove i from its community
+            sigma_in[ci] -= 2.0 * neighbor_weights.get(ci, 0.0)
+            sigma_tot[ci] -= k[i]
+
+            best_community = ci
+            best_gain = 0.0
+
+            for c, w_ic in neighbor_weights.items():
+                # Modularity gain of moving i to community c
+                gain = (2.0 * w_ic - resolution * sigma_tot.get(c, 0.0) * k[i] / m2)
+                if gain > best_gain:
+                    best_gain = gain
+                    best_community = c
+
+            # Move i to best community
+            community[i] = best_community
+            sigma_in[best_community] += 2.0 * neighbor_weights.get(best_community, 0.0)
+            sigma_tot[best_community] += k[i]
+
+            if best_community != ci:
+                improved = True
+
+    # Renumber communities to 0..N-1
+    unique = sorted(set(community.values()))
+    remap = {old: new for new, old in enumerate(unique)}
+    community = {i: remap[c] for i, c in community.items()}
+
+    q = _modularity(community, adj, m2)
+    return community, q
+
+
+def build_groups_louvain(
+    tabs: List[Dict],
+    similarity_matrix: List[List[float]],
+    edge_threshold: float = 0.15,
+    resolution: float = 1.0,
+) -> Tuple[List[Dict], Dict[int, int], float]:
+    """Cluster tabs using Louvain community detection.
+
+    Returns (groups, tab_to_group, modularity).
+    """
+    n = len(tabs)
+    if n == 0:
+        return [], {}, 0.0
+
+    community, modularity = louvain(n, similarity_matrix, edge_threshold, resolution)
+
+    groups_map: Dict[int, List[int]] = defaultdict(list)
+    for idx, cid in community.items():
+        groups_map[cid].append(idx)
+
+    groups: List[Dict] = []
+    tab_to_group: Dict[int, int] = {}
+    for gid, indices in sorted(groups_map.items()):
+        tab_ids = [tabs[i]["id"] for i in indices]
+        groups.append({"id": gid, "tab_ids": tab_ids, "size": len(tab_ids)})
+        for tid in tab_ids:
+            tab_to_group[tid] = gid
+
+    return groups, tab_to_group, modularity
+
+
+# ============ PAGERANK ============
+
+
+def pagerank(
+    n: int,
+    matrix: List[List[float]],
+    edge_threshold: float = 0.1,
+    damping: float = 0.85,
+    max_iter: int = 100,
+    tol: float = 1e-6,
+) -> List[float]:
+    """Compute PageRank scores for nodes in a weighted graph.
+
+    Uses the similarity matrix as a weighted adjacency. Edges below threshold are ignored.
+    Returns a list of scores (one per node), summing to 1.0.
+    """
+    if n == 0:
+        return []
+
+    # Build weighted out-degree and adjacency
+    out_weight = [0.0] * n
+    adj: List[List[Tuple[int, float]]] = [[] for _ in range(n)]
+
+    for i in range(n):
+        for j in range(n):
+            if i != j and matrix[i][j] >= edge_threshold:
+                w = matrix[i][j]
+                adj[j].append((i, w))
+                out_weight[i] += w
+
+    rank = [1.0 / n] * n
+    base = (1.0 - damping) / n
+
+    for _ in range(max_iter):
+        new_rank = [base] * n
+        dangling_sum = sum(rank[i] for i in range(n) if out_weight[i] == 0)
+        dangling_contrib = damping * dangling_sum / n
+
+        for j in range(n):
+            s = 0.0
+            for i, w in adj[j]:
+                if out_weight[i] > 0:
+                    s += rank[i] * w / out_weight[i]
+            new_rank[j] += damping * s + dangling_contrib
+
+        diff = sum(abs(new_rank[i] - rank[i]) for i in range(n))
+        rank = new_rank
+        if diff < tol:
+            break
+
+    return rank
+
+
+# ============ LEGACY BUILD_GROUPS (kept for backward compat) ============
+
+
 def build_groups(
     tabs: List[Dict],
     similarity_matrix: List[List[float]],
@@ -78,7 +280,10 @@ def build_groups(
     mutual_knn: bool,
     knn_k: int,
 ) -> Tuple[List[Dict], Dict[int, int]]:
-    """Cluster tabs into groups using Union-Find with domain grouping and mutual KNN."""
+    """Cluster tabs into groups using Union-Find with domain grouping and mutual KNN.
+
+    Legacy method — prefer build_groups_louvain for better cluster quality.
+    """
     parent = list(range(len(tabs)))
 
     def find(x: int) -> int:
@@ -92,7 +297,6 @@ def build_groups(
         if ra != rb:
             parent[rb] = ra
 
-    # Domain-based pre-grouping
     if domain_group:
         domain_map: Dict[str, List[int]] = {}
         for idx, tab in enumerate(tabs):
@@ -105,7 +309,6 @@ def build_groups(
                 for idx in indices[1:]:
                     union(root, idx)
 
-    # Mutual KNN clustering
     if mutual_knn:
         neighbors = []
         for i in range(len(tabs)):
@@ -125,7 +328,6 @@ def build_groups(
                 if similarity_matrix[i][j] >= threshold:
                     union(i, j)
 
-    # Collect groups
     groups_map: Dict[int, List[int]] = {}
     for idx in range(len(tabs)):
         root = find(idx)
@@ -136,13 +338,7 @@ def build_groups(
     for gid, (root, indices) in enumerate(groups_map.items()):
         group_tabs = [tabs[i] for i in indices]
         tab_ids = [t["id"] for t in group_tabs]
-        groups.append(
-            {
-                "id": gid,
-                "tab_ids": tab_ids,
-                "size": len(tab_ids),
-            }
-        )
+        groups.append({"id": gid, "tab_ids": tab_ids, "size": len(tab_ids)})
         for tid in tab_ids:
             tab_to_group[tid] = gid
     return groups, tab_to_group

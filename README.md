@@ -1,18 +1,36 @@
 # Weft
 
-A local-first knowledge graph for your browsing.
+**Local-first knowledge graph for your browsing.**
 
-Weft turns your browser tabs into a searchable, clustered knowledge graph. Instead of drowning in hundreds of tabs or flat bookmark lists, Weft groups related pages, removes duplicates, and lets you explore your browsing context visually.
+Weft turns browser tabs into a searchable, clustered knowledge graph using Louvain community detection and PageRank. No cloud. No accounts. Everything runs on your machine.
 
-**Think:** Obsidian graph view, but for the web you already opened.
+**Think:** Obsidian graph view, but for the web you already have open.
+
+[![PyPI](https://img.shields.io/pypi/v/weft-graph)](https://pypi.org/project/weft-graph/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+
+---
+
+## Why Weft
+
+You have 80 tabs open. Some are related. Some are duplicates. You can't remember what you were researching yesterday.
+
+Weft fixes this:
+- **Clusters tabs by topic** using graph algorithms, not manual folders
+- **Deduplicates** with URL canonicalization + SimHash near-duplicate detection
+- **Tracks navigation** so "A led to B" is a first-class relationship
+- **Runs locally** — your browsing data never leaves your machine
+
+---
 
 ## Two Ways to Use Weft
 
 | | Chrome Extension | CLI (Python) |
-|---|------------------|--------------|
-| **Best for** | Live tracking, visual exploration | Batch processing, scripting |
-| **Graph View** | Interactive sidepanel | Terminal UI |
-| **Navigation Tracking** | Automatic | Manual export |
+|---|---|---|
+| **Best for** | Live tracking, visual exploration | Batch processing, scripting, MCP |
+| **Graph View** | Interactive sidepanel with Cytoscape.js | Terminal UI with Textual |
+| **Clustering** | Real-time Louvain | Configurable Louvain or Union-Find |
 | **Install** | Load unpacked extension | `pip install weft-graph` |
 
 ---
@@ -25,15 +43,20 @@ Live knowledge graph that tracks your browsing in real-time.
 
 ### Features
 
-- **Live Tab Tracking** - Automatically captures tabs as you browse
-- **Navigation Edges** - Tracks how you move between pages (including SPAs)
-- **Graph Visualization** - Interactive Cytoscape.js graph with zoom/pan
-- **Smart Grouping** - Clusters related pages by content similarity
-- **Keyword Extraction** - Automatic keyword detection from page content
-- **Search** - Fuzzy text, `#keyword`, and `@domain` filters
-- **Import/Export** - Compatible with CLI JSON format
-- **Daily Insights** - View personalized reports on your browsing habits (requires server)
-- **Real-time Sync** - Send live tabs to local server for instant analysis
+- **Live Tab Tracking** — captures tabs as you browse, extracts content automatically
+- **Louvain Clustering** — groups related pages using community detection, not arbitrary thresholds
+- **PageRank Sorting** — most important tabs surface to the top of each group
+- **Navigation Edges** — tracks how you move between pages, including SPA navigations
+- **Graph Visualization** — interactive Cytoscape.js graph with color-coded clusters
+- **Smart Search** — fuzzy text, `#keyword`, and `@domain` filters with search history
+- **Group Actions** — open all, close all, or copy links for any cluster
+- **Live Tab Indicators** — see which tabs are open, closed, or stale at a glance
+- **Stale Tab Detection** — highlights tabs you haven't touched in 24+ hours
+- **Keyboard Navigation** — full `j/k/Enter/o` navigation, vim-style
+- **Settings** — configurable server URL, auto-rebuild, stale threshold
+- **Onboarding** — guided first-run experience
+- **Import/Export** — JSON format compatible with CLI
+- **Offline Insights** — browsing report works without the server
 
 ### Install Extension
 
@@ -41,32 +64,25 @@ Live knowledge graph that tracks your browsing in real-time.
 2. Open Chrome → `chrome://extensions`
 3. Enable "Developer mode" (top right)
 4. Click "Load unpacked" → select the `extension/` folder
-5. Click the Weft icon or open sidepanel
+5. Click the Weft icon to open the sidepanel
 
-### Extension Usage
+### Keyboard Shortcuts (Extension)
 
-**Views:**
-- **Groups** - Browse tabs organized by topic clusters
-- **Graph** - Visual knowledge graph with similarity and navigation edges
-- **Insights** - View summary of top research topics and key themes
-
-**Search Syntax:**
-- Fuzzy: `distributed systems`
-- Keyword: `#database`
-- Domain: `@github.com`
-
-**Actions:**
-- Click any tab to see details (URL, keywords, group)
-- Click "Open Tab" to open in browser
-- Use refresh button to rebuild graph after browsing
-- Export/Import for backup or CLI compatibility
-- **Click "Refresh Insights"** to sync live tabs and generate report
+| Key | Action |
+|-----|--------|
+| `/` | Focus search |
+| `g` / `v` / `i` | Switch to Groups / Graph / Insights |
+| `r` | Rebuild graph |
+| `j` / `k` | Navigate groups and tabs |
+| `Enter` | Expand group or open tab |
+| `o` | Open focused tab |
+| `Esc` | Close panel / exit settings |
 
 ---
 
 ## CLI Tool
 
-Batch processing and terminal UI for exploring your knowledge graph.
+Batch processing, terminal UI, API server, and MCP integration.
 
 ![Weft CLI Demo](https://raw.githubusercontent.com/Avi-141/weft/main/demo.gif)
 
@@ -87,13 +103,13 @@ pip install -e .
 ### Quick Start
 
 ```bash
-# Build knowledge graph from your browser tabs
+# Build knowledge graph from browser tabs
 weft weave
 
-# Explore in terminal UI (press 'i' for insights)
+# Explore in terminal UI
 weft explore
 
-# Run the API/MCP server
+# Start API + MCP server
 weft serve
 ```
 
@@ -101,40 +117,40 @@ weft serve
 
 #### `weft weave`
 
-Extracts tabs from browsers and weaves them into a knowledge graph.
+Extracts tabs from browsers and builds a knowledge graph.
 
 ```bash
-# From all browsers (default)
+# Default: all browsers, Louvain clustering
 weft weave
 
-# Chrome only
-weft weave --browser chrome
-
-# Firefox only
-weft weave --browser firefox
+# Chrome only, fast mode (no crawling)
+weft weave --browser chrome --no-crawl
 
 # With LLM summaries (requires Ollama)
 weft weave --summarize
 
-# Fast mode (tab titles only, no crawling)
-weft weave --no-crawl
+# Legacy clustering (Union-Find + mutual KNN)
+weft weave --no-louvain
+
+# Tighter clusters
+weft weave --louvain-resolution 1.5
+
+# Looser clusters
+weft weave --louvain-resolution 0.7
 ```
 
 #### `weft explore`
 
-Interactive TUI for exploring your knowledge graph.
+Interactive TUI for browsing your knowledge graph.
 
 ```bash
-# Default graph
 weft explore
-
-# Specific file
 weft explore my_graph.json
 ```
 
 #### `weft insights`
 
-Print a markdown report of your browsing habits, top topics, and key themes.
+Print a markdown report of your browsing: top topics, key themes, domain breakdown.
 
 ```bash
 weft insights
@@ -142,122 +158,206 @@ weft insights
 
 #### `weft serve`
 
-Run the Weft API and MCP server. This enables:
-- **Real-time Insights** in the browser extension
-- **Claude Desktop** integration (MCP)
+Run the API and MCP server for real-time extension sync and Claude Desktop integration.
 
 ```bash
 weft serve
-# Server runs at http://localhost:8000
+# Runs at http://localhost:8000
 ```
 
 #### `weft install-mcp` (macOS)
 
-Automatically configure Claude Desktop to talk to Weft.
+Configure Claude Desktop to talk to Weft via MCP.
 
 ```bash
 weft install-mcp
 ```
-Once installed, ask Claude: *"Summarize my research on Python async libraries."*
+
+Then ask Claude: *"What was I researching about distributed systems?"*
 
 #### `weft export-obsidian`
 
-Export your knowledge clusters as markdown files to your Obsidian vault.
+Export knowledge clusters as linked markdown notes to your Obsidian vault.
 
 ```bash
-weft export-obsidian "/Users/you/Documents/MyVault"
+weft export-obsidian "/path/to/vault"
 ```
-Creates a `Weft Browsing` folder with tagged and linked notes for each cluster.
-
-#### Keyboard Shortcuts
-
-| Key | Action |
-|-----|--------|
-| `[` / `]` | Navigate groups |
-| `{` / `}` | Navigate tabs in group |
-| `o` | Open tab in browser |
-| `g` | Open all tabs in group |
-| `v` | Switch to graph view |
-| `i` | Switch to insights view |
-| `s` | Focus search |
-| `q` | Quit |
 
 ---
 
-## How It Works
+## Architecture
 
 ```
-Tabs → Extract → Analyze → Dedupe → Cluster → Graph → Explore
-         │          │         │         │        │
-         ▼          ▼         ▼         ▼        ▼
-      Browser    Keywords   SimHash   Union   Similarity
-       Tabs      Content    Matching   Find    + Navigation
+┌─────────────────────────────────────────────────────┐
+│                    DATA SOURCES                      │
+│  Chrome (AppleScript)  Firefox (sessionstore)        │
+│  Chrome Extension (live capture via chrome.tabs)     │
+└──────────────────────┬──────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────┐
+│                  EXTRACT + ANALYZE                   │
+│  HTTP crawl (requests + trafilatura)                 │
+│  Content script DOM extraction (extension)           │
+│  Keyword extraction (TF) + SimHash fingerprinting    │
+│  Optional: LLM summaries + embeddings (Ollama)       │
+└──────────────────────┬──────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────┐
+│                    DEDUPLICATE                        │
+│  Canonical URL normalization (strip tracking, www)   │
+│  SimHash near-duplicate detection (same domain)      │
+│  Union-Find to merge duplicate sets                  │
+└──────────────────────┬──────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────┐
+│              CLUSTER (LOUVAIN + PAGERANK)             │
+│  Similarity matrix (Jaccard or cosine + domain)      │
+│  Louvain community detection (modularity Q)          │
+│  PageRank for node importance scoring                │
+│  PageRank-weighted TF-IDF group labeling             │
+└──────────────────────┬──────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────┐
+│                   GRAPH OUTPUT                        │
+│  { tabs, groups, edges, stats }                      │
+│  schema_version: 1                                   │
+│  modularity score + clustering method in stats       │
+└──────┬───────────┬────────────┬─────────────────────┘
+       │           │            │
+       ▼           ▼            ▼
+  CLI / TUI    Extension    Server / MCP
+  (Textual)   (Cytoscape)   (FastAPI)
 ```
 
-1. **Extract** - Captures tabs from browser (live or batch)
-2. **Analyze** - Extracts keywords from page content
-3. **Deduplicate** - Canonical URL matching + SimHash for near-duplicates
-4. **Cluster** - Groups by similarity using Union-Find algorithm
-5. **Graph** - Builds similarity edges + navigation edges between pages
-6. **Explore** - Visual graph or terminal UI for discovery
+---
+
+## Algorithms
+
+### Louvain Community Detection
+
+Weft uses the [Louvain method](https://en.wikipedia.org/wiki/Louvain_method) for clustering tabs. Instead of forcing tabs together by domain or arbitrary thresholds, Louvain optimizes **modularity** — finding groups where internal similarity is denser than expected by chance.
+
+**How it works:**
+1. Build a weighted graph from the similarity matrix (edges above threshold)
+2. Start with each tab in its own community
+3. For each tab, compute the modularity gain of moving it to each neighbor's community
+4. Move it to the community with the highest gain (if positive)
+5. Repeat until no single move improves modularity
+
+**Resolution parameter:** Controls cluster granularity. Default is 1.0. Values >1.0 produce smaller, tighter clusters. Values <1.0 produce larger, looser ones.
+
+**Modularity Q:** A score from -0.5 to 1.0 measuring cluster quality. Values above 0.3 indicate meaningful community structure. Weft reports this in graph stats and the extension UI.
+
+### PageRank
+
+Each tab gets a [PageRank](https://en.wikipedia.org/wiki/PageRank) score based on its position in the similarity graph. Tabs that are highly connected to other important tabs rank higher.
+
+**Used for:**
+- **Sorting** — tabs within each group are ordered by importance
+- **Labeling** — group labels are generated using PageRank-weighted TF-IDF, so the label reflects the most central content in the cluster, not just the most frequent words
+
+### Similarity
+
+| Mode | Method | When |
+|------|--------|------|
+| Default | Jaccard similarity on extracted keywords | Always available |
+| Embeddings | Cosine similarity on vector embeddings | With `--summarize` (Ollama) |
+| Domain bonus | +0.25 for same-domain tabs | Always applied |
+
+All scores are clamped to [0, 1].
+
+### Deduplication
+
+Two-stage deduplication using Union-Find:
+
+1. **Canonical URL** — normalize URLs (strip tracking params, www, fragments) and merge exact matches
+2. **SimHash** — 64-bit locality-sensitive hash of page content; tabs with Hamming distance ≤ 3 on the same domain are merged as near-duplicates
 
 ### Edge Types
 
-| Type | Description | Visual |
+| Type | Description | Weight |
 |------|-------------|--------|
-| **Similarity** | Pages with related content | Light edges |
-| **Navigation** | You clicked from A to B | Bold edges |
+| Similarity | Tabs with related content | 0–1.0 (Jaccard/cosine) |
+| Similarity+Domain | Similar content + same domain | 0–1.0 |
+| Navigation | User clicked from A to B | 1.0 |
 
-### Similarity Computation
+---
 
-| Mode | Method |
-|------|--------|
-| Default | Jaccard similarity on keywords |
-| With `--summarize` | Cosine similarity on embeddings |
+## MCP Integration
 
-A **domain bonus** (default: 0.25) is added when tabs share the same domain.
+Weft exposes your browsing context to AI assistants via the [Model Context Protocol](https://modelcontextprotocol.io/).
 
-### Clustering Algorithm
+**Resources:**
+- `browsing://insights` — browsing memory report with top topics, themes, sources
+- `browsing://groups` — all clusters with labels, keywords, domains, sizes
+- `browsing://stats` — graph metrics: tab count, modularity, clustering method
 
-Uses **Union-Find** with two strategies:
+**Tools:**
+- `search_knowledge(query)` — ranked search across titles, summaries, keywords, URLs. Scores by keyword overlap + PageRank.
+- `get_group_details(group_id)` — cluster deep-dive: synthesized summary, tabs sorted by PageRank, top keywords and domains
+- `get_tab_neighbors(tab_id)` — graph neighborhood: all tabs connected by similarity or navigation edges, with edge weights
+- `find_recent_tabs(hours)` — temporal query: tabs active within the last N hours
+- `find_stale_tabs(stale_hours)` — cleanup candidates: tabs not accessed in N+ hours, sorted by staleness
+- `find_related_to_topic(topic)` — topic expansion: finds direct keyword matches, then follows graph edges to discover related content you wouldn't find by search alone
 
-1. **Domain Pre-grouping** - Tabs from the same domain grouped together
-2. **Mutual KNN** - Two tabs cluster only if they mutually consider each other neighbors
+```bash
+# Install MCP for Claude Desktop
+weft install-mcp
+
+# Start the server
+weft serve
+```
+
+Example prompts for Claude:
+- *"What was I researching about Python async?"*
+- *"Show me tabs related to database optimization"*
+- *"What have I been browsing in the last 2 hours?"*
+- *"Find stale tabs I should close"*
+- *"What's connected to the React hooks guide I was reading?"*
 
 ---
 
 ## Requirements
 
 ### Extension
-- Chrome/Chromium browser
+- Chrome or Chromium browser
 
 ### CLI
 - Python 3.9+
-- macOS (browser export uses AppleScript)
+- macOS or Windows
 - Chrome and/or Firefox
 
-### Optional: LLM Summaries (CLI)
+### Optional
 
 ```bash
-# Install Ollama
+# LLM summaries (embedding-based clustering)
 brew install ollama
-
-# Pull models
 ollama pull llama3.1:8b
 ollama pull nomic-embed-text
-
-# Use with summarization
 weft weave --summarize
+
+# Firefox tab export
+pip install lz4
+
+# JS-heavy page rendering
+pip install playwright
 ```
 
 ---
 
 ## Privacy
 
-Weft is **fully local**. Your browsing data never leaves your machine:
-- Extension uses IndexedDB (browser local storage)
+Weft is **fully local**:
+- Extension stores data in IndexedDB (browser-local)
 - CLI stores data in local JSON files
-- No analytics, no cloud sync, no external requests
+- No analytics, no telemetry, no cloud sync
+- Network access only for fetching URLs you provide and optional Ollama calls on localhost
+
+---
 
 ## License
 

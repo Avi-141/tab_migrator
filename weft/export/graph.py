@@ -19,10 +19,12 @@ from weft.export.llm import (
 from weft.export.similarity import (
     build_edges,
     build_groups,
+    build_groups_louvain,
     build_similarity_matrix,
     compute_idf,
     dedupe_tabs,
     label_group,
+    pagerank,
 )
 from weft.utils.text import (
     extract_keywords,
@@ -84,8 +86,43 @@ class GraphOptions:
     dedupe_hamming: int = 3
     keyword_count: int = 8
 
+    # Louvain
+    use_louvain: bool = True
+    louvain_resolution: float = 1.0
+    no_louvain: bool = False
+
     # Verbose
     verbose: bool = False
+
+
+def label_group_ranked(
+    group_tabs: List[Dict], idf: Dict[str, float], pr_by_id: Dict[int, float]
+) -> str:
+    """Generate a label using PageRank-weighted TF-IDF.
+
+    Tabs with higher PageRank contribute more to the group label, so the label
+    reflects the most central/important content in the cluster.
+    """
+    from collections import Counter
+
+    domains = [t.get("domain") for t in group_tabs if t.get("domain")]
+    if domains:
+        counts = Counter(domains)
+        domain, count = counts.most_common(1)[0]
+        if count / max(1, len(group_tabs)) >= 0.55:
+            return domain
+
+    scored_terms: Dict[str, float] = {}
+    for tab in group_tabs:
+        weight = pr_by_id.get(tab.get("id"), 0.0) + 0.01
+        for token in tab.get("tokens", []):
+            tf_idf = idf.get(token, 0.0)
+            scored_terms[token] = scored_terms.get(token, 0.0) + tf_idf * weight
+
+    top = sorted(scored_terms.items(), key=lambda x: x[1], reverse=True)[:3]
+    if top:
+        return " / ".join(t[0] for t in top)
+    return "group"
 
 
 def load_tabs_from_windows(windows: List[Dict]) -> List[Dict]:
@@ -343,15 +380,33 @@ def build_tab_graph(tabs: List[Dict], options: GraphOptions) -> Dict:
     edges = build_edges(primary_tabs, similarity_matrix, options.edge_threshold)
 
     # Build groups
-    groups_primary, tab_to_group_primary = build_groups(
-        primary_tabs,
-        similarity_matrix,
-        options.group_threshold,
-        domain_group=not options.no_domain_group,
-        domain_group_min=options.domain_group_min,
-        mutual_knn=not options.no_mutual_knn,
-        knn_k=options.knn_k,
-    )
+    use_louvain = options.use_louvain and not options.no_louvain
+    modularity = 0.0
+
+    if use_louvain:
+        groups_primary, tab_to_group_primary, modularity = build_groups_louvain(
+            primary_tabs,
+            similarity_matrix,
+            edge_threshold=options.edge_threshold,
+            resolution=options.louvain_resolution,
+        )
+    else:
+        groups_primary, tab_to_group_primary = build_groups(
+            primary_tabs,
+            similarity_matrix,
+            options.group_threshold,
+            domain_group=not options.no_domain_group,
+            domain_group_min=options.domain_group_min,
+            mutual_knn=not options.no_mutual_knn,
+            knn_k=options.knn_k,
+        )
+
+    # Compute PageRank on the primary tabs
+    pr_scores = pagerank(len(primary_tabs), similarity_matrix, edge_threshold=options.edge_threshold)
+    pr_by_id = {}
+    for idx, tab in enumerate(primary_tabs):
+        pr_by_id[tab["id"]] = pr_scores[idx] if idx < len(pr_scores) else 0.0
+        tab["pagerank"] = round(pr_scores[idx], 6) if idx < len(pr_scores) else 0.0
 
     # Assign groups to all tabs (including duplicates)
     groups_map: Dict[int, List[int]] = {g.get("id"): [] for g in groups_primary}
@@ -363,14 +418,14 @@ def build_tab_graph(tabs: List[Dict], options: GraphOptions) -> Dict:
         if group_id in groups_map:
             groups_map[group_id].append(tab.get("id"))
 
-    # Build final groups with labels
+    # Build final groups with PageRank-weighted labels
     groups = []
     for group in groups_primary:
         gid = group.get("id")
         tab_ids = groups_map.get(gid, [])
         group_primary_tabs = [tab_by_id.get(tid) for tid in tab_ids if tab_by_id.get(tid)]
         group_primary_tabs = [t for t in group_primary_tabs if t.get("duplicate_of") is None]
-        label = label_group(group_primary_tabs, idf)
+        label = label_group_ranked(group_primary_tabs, idf, pr_by_id)
         groups.append(
             {
                 "id": gid,
@@ -401,6 +456,8 @@ def build_tab_graph(tabs: List[Dict], options: GraphOptions) -> Dict:
             "embed_reused": embed_reused,
             "embed_skipped": embed_skipped,
             "duplicates": duplicates,
+            "modularity": round(modularity, 4),
+            "clustering": "louvain" if use_louvain else "union-find",
         },
         "tabs": tabs,
         "groups": groups,

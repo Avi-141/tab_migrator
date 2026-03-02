@@ -84,6 +84,8 @@ def cmd_weave(args):
         no_mutual_knn=args.no_mutual_knn,
         dedupe_hamming=args.dedupe_hamming,
         keyword_count=args.keyword_count,
+        no_louvain=args.no_louvain,
+        louvain_resolution=args.louvain_resolution,
         verbose=args.verbose,
     )
 
@@ -96,10 +98,13 @@ def cmd_weave(args):
 
     stats = graph["stats"]
     mode = "with LLM summaries" if args.summarize else "lightweight (keywords only)"
+    clustering = stats.get("clustering", "unknown")
+    modularity = stats.get("modularity", 0)
     print(
         f"[OK] Wrote {args.out} {mode}\n"
         f"     {stats['tab_count']} tabs, {stats['group_count']} groups, "
-        f"{stats['edge_count']} edges, {stats['duplicates']} duplicates"
+        f"{stats['edge_count']} edges, {stats['duplicates']} duplicates\n"
+        f"     clustering: {clustering}, modularity: {modularity:.4f}"
     )
     if stats["errors"]:
         print(f"     {stats['errors']} errors during processing", file=sys.stderr)
@@ -158,7 +163,7 @@ def cmd_install_mcp(args):
     
     if platform.system() != "Darwin":
         print("[ERROR] Automatic installation is only supported on macOS for now.", file=sys.stderr)
-        return
+        sys.exit(1)
 
     config_path = os.path.expanduser("~/Library/Application Support/Claude/claude_desktop_config.json")
     
@@ -202,7 +207,7 @@ def cmd_export_obsidian(args):
     
     if not os.path.exists(args.graph_json):
         print(f"[ERROR] Graph file not found: {args.graph_json}", file=sys.stderr)
-        return
+        sys.exit(1)
 
     graph = load_graph(args.graph_json)
     print(f"Exporting to Obsidian vault at {args.vault_path}...")
@@ -211,6 +216,7 @@ def cmd_export_obsidian(args):
         print("[OK] Export complete.")
     except Exception as e:
         print(f"[ERROR] Export failed: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 def main():
@@ -426,6 +432,17 @@ def main():
         type=int,
         default=8,
         help="Number of keywords per tab",
+    )
+    weave_parser.add_argument(
+        "--no-louvain",
+        action="store_true",
+        help="Disable Louvain clustering (use legacy Union-Find)",
+    )
+    weave_parser.add_argument(
+        "--louvain-resolution",
+        type=float,
+        default=1.0,
+        help="Louvain resolution: >1.0 for smaller clusters, <1.0 for larger (default: 1.0)",
     )
 
     # General options
